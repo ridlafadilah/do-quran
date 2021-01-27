@@ -1,0 +1,148 @@
+{
+    "@@locale": "en",
+    "hello": "Hello,",
+    "settings": "Settings",
+    "security": "Security",
+    "about": "About",
+    "logout": "Logout",
+    "login": "Login",
+    "language": "Language",
+    "darkMode": "Dark Mode",
+    "defaultMode": "Default Mode",
+    "account": "Account",
+    "editProfile": "Profile",
+    "photoProfile": "Photo Profile",
+    "fullname": "Fullname",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "phoneNumber": "Phone Number",
+    "gender": "Gender",
+    "pdob": "Place / Date of Birth",
+    "placeOfBirth": "Place of Birth",
+    "dateOfBirth": "Date of Birth",
+    "address": "Address",
+    "register": "Register",
+    "update": "Update",
+    "termsAndConditions": "Terms and Conditions",
+    "privacyPolicy": "Privacy Policy",
+    "deactivateAccount": "Deactivate Account",
+    "deactivateAccountWarning": "Once you deactivated account, there is no going back. Please be certain.",
+    "changePassword": "Change Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot Password",
+    "forgotPasswordVerification": "Forgot Password Verification",
+    "verify": "Verify",
+    "send": "Send",
+    "resend": "Resend",
+    "twoFactorAuthentication": "2-Step Verification",
+    "twoFactorAuthenticationSubtitle": "Send a verification code every time you login",
+    "days": "{value} Days",
+    "@days": {
+      "placeholders": {
+          "value": {}
+      }
+    },
+    "light": "Light",
+    "dark": "Dark",
+    "retry": "Retry",
+    "male": "Male",
+    "female": "Female",
+    "exercise": "Exercise",
+    "template": "Template",
+    "shalat": "Shalat",
+    "qibla": "Qibla",
+    "alquran": "Al-Qur'an",
+  
+    "hintUsernameEmail": "Username / Email",
+
+    "ERR_LOAD_FILE": "Failed to load file",
+    "ERR_CANCELLED": "Request was cancelled",
+		"ERR_400": "Bad Request",
+		"ERR_401": "Unauthorized",
+		"ERR_403": "Access Denied",
+		"ERR_404": "Not Found",
+		"ERR_500": "Internal Server Error",
+		"ERR_504": "Timeout Server",
+		"internalServerError": "Internal Server Error",
+    "errorDioCancel": "Request was cancelled",
+    "errorDioConnectTimeout": "Connection timeout",
+    "errorDioDefault": "Connection failed due to internet connection",
+    "errorDioReceiveTimeout": "Receive timeout in connection",
+    "errorDioSendTimeout": "Receive timeout in send request",
+    "badCredentials": "Incorrect Username or Password",
+    "userAccountIsLocked": "Account has been locked",
+    "userIsDisabled": "Account has been deactivated",
+    "userAccountHasExpired": "Account has been expired",
+    "userCredentialsHaveExpired": "Account credentials has been expired",
+  
+    "labelFooterLoginSocial": "or enter with",
+    "labelFooterLoginOther": "Don't have an account?",
+    "labelLogin": "Hello! Login with your username or email.",
+    "labelUsernameEmail": "Username or email",
+    "labelLoginSocial": "Logged in with {value}?",
+    "@labelLoginSocial": {
+      "placeholders": {
+          "value": {}
+      }
+    },
+    "labelForgotPassword": "Enter your new password",
+    "labelForgotPasswordRequest": "Enter your email address and we’ll send the code to reset your password",
+    "labelForgotPasswordVerification": "Enter the code sent to {value}",
+    "@labelForgotPasswordVerification": {
+      "placeholders": {
+          "value": {}
+      }
+    },
+    "labelForgotPasswordResend": "Didn't receive the code?",
+    "labelForgotPasswordTimer": "Enter the code before {value}",
+    "@labelForgotPasswordTimer": {
+      "placeholders": {
+          "value": {}
+      }
+    },
+    "labelBackToLogin": "Back to Login",
+    "labelTermsRegister": "Agree to",
+  
+    "errorUsername": "Username is required!",
+    "errorEmail": "Email is required!",
+    "errorPassword": "Password is required!",
+    "errorFullname": "Fullname is required!",
+    "errorPhoneNumber": "Phone Number is invalid!",
+    "errorPlaceOfBirth": "Place of Birth is required!",
+    "errorDateOfBirth": "Date of Birth is required!",
+    "errorAddress": "Address is required!",
+    "errorNewPassword": "Make sure it's at least 8 characters\nincluding a number, a lowercase, and uppercase letter",
+    "errorConfirmPassword": "New Password and Confirm Password not match",
+  
+    "badgeExerciseTitle": "Next workout",
+    "badgeExerciseSubtitle": "UI Widgets (Components)\nAPI calls\nAccessibility & i18n",
+  
+    "titleWidgetProfileTitle": "Your Profile",
+    "titleWidgetProfileSubtitle": "Customize",
+  
+    "promptTwoFactorAuthenticationTitle": "2-Step Verification",
+    "promptTwoFactorAuthenticationEnableSubtitle": "Are you sure want to enable 2-Step Verification?",
+    "promptTwoFactorAuthenticationDisableSubtitle": "Are you sure want to disable 2-Step Verification?",
+    "promptDeactivateAccountTitle": "Deactivate Account",
+    "promptDeactivateAccountSubtitle": "This action cannot be undone. This will permanently disable your account.\nI understand the consequences",
+    "promptThemeTitle": "Change Theme",
+    "promptThemeSubtitle": "Are you sure want to change to {value}?",
+    "@promptThemeSubtitle": {
+      "placeholders": {
+          "value": {}
+      }
+    },
+    "promptLanguageTitle": "Change Language",
+    "promptLanguageSubtitle": "Are you sure want to change the language into {value}?",
+    "@promptLanguageSubtitle": {
+      "placeholders": {
+          "value": {}
+      }
+    },
+  
+    "buttonSubmit": "Submit",
+    "buttonCancel": "Cancel"
+  }
+  

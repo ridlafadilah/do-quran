@@ -1,0 +1,18 @@
+name: do_common
+description: Library of common framework.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.22.3"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  formz: ^0.3.2
+  shimmer: ^1.1.2
+  webview_flutter: ^1.0.7
+  http: ^0.12.2
+  do_theme:
+    path: ../do_theme

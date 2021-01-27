@@ -1,0 +1,40 @@
+name: do_core
+description: Library of core logic.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.22.3"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  firebase_auth:
+  google_sign_in: ^4.5.6
+  camera: ^0.5.8+17
+  path_provider:
+  path:
+  equatable: ^1.2.5
+  flutter_bloc: ^6.0.6
+  bloc: ^6.1.0
+  dio: ^3.0.10
+  retrofit: ^1.3.4+1
+  meta: ^1.2.3
+  provider: ^4.3.2+2
+  get_it: ^5.0.1
+  shared_preferences: ^0.5.12+2
+  global_configuration: ^1.6.0
+  json_annotation: ^3.1.0
+  logger: ^0.9.4
+  crypto: ^2.1.5
+  encrypt: ^4.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  json_serializable: ^3.5.0
+  build_runner: ^1.10.4
+  retrofit_generator: ^1.4.0
