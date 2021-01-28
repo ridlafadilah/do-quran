@@ -1,13 +1,10 @@
+import 'dart:math' as math;
+
 import 'package:do_quran/generated/l10n.dart';
 import 'package:do_theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:do_quran/model/quran/response_surat.dart';
-import 'package:do_quran/api/api_service.dart';
-import 'package:do_quran/api/api_url.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter_compass/flutter_compass.dart';
-import 'dart:math' as math;
-import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class QiblaPage extends StatefulWidget {
   const QiblaPage({Key key, this.animationController}) : super(key: key);
@@ -21,13 +18,6 @@ class _QiblaPageState extends State<QiblaPage> with TickerProviderStateMixin {
   List<Widget> listViews = <Widget>[];
   final ScrollController _scrollController = ScrollController();
   double _topBarOpacity = 0.0;
-  RefreshController _refreshCon = RefreshController();
-  final ApiService _apiService = ApiService();
-  List<Hasil> listHasil = [];
-  var _pageLoading = true;
-  bool _hasPermissions = false;
-  CompassEvent _lastRead;
-  DateTime _lastReadAt;
 
   @override
   void initState() {
@@ -53,37 +43,7 @@ class _QiblaPageState extends State<QiblaPage> with TickerProviderStateMixin {
         }
       }
     });
-    checkPermission();
     super.initState();
-  }
-
-  void checkPermission() async {
-    if (await Permission.locationWhenInUse.isGranted) {
-      setState(() {
-        _hasPermissions = true;
-      });
-    }
-  }
-
-  Future<bool> getData() async {
-    _refreshCon.refreshToIdle();
-    await _apiService.get(
-        url: ApiUrl.surat,
-        headers: {},
-        callback: (status, message, response) {
-          setState(() {
-            _refreshCon.refreshCompleted();
-            _pageLoading = false;
-
-            if (listHasil.isNotEmpty) listHasil.clear();
-            if (status) {
-              ResponseSurat resSurat = ResponseSurat.fromJson(response);
-              listHasil = resSurat.hasil;
-            }
-          });
-          return;
-        });
-    return true;
   }
 
   @override
@@ -94,65 +54,19 @@ class _QiblaPageState extends State<QiblaPage> with TickerProviderStateMixin {
         backgroundColor: Colors.transparent,
         resizeToAvoidBottomInset: false,
         resizeToAvoidBottomPadding: false,
-        appBar: appBar(),
+        appBar: appBar(context),
         body: Stack(
           children: <Widget>[
-            mainView(),
+            Column(
+              children: <Widget>[
+                _buildCompass(),
+              ],
+            ),
             SizedBox(
               height: MediaQuery.of(context).padding.bottom,
             )
           ],
         ),
-      ),
-    );
-  }
-
-  Widget mainView() {
-    return Builder(builder: (context) {
-      if (_hasPermissions) {
-        return Column(
-          children: <Widget>[
-            _buildManualReader(),
-            Expanded(child: _buildCompass()),
-          ],
-        );
-      } else {
-        return _buildPermissionSheet();
-      }
-    });
-  }
-
-  Widget _buildManualReader() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        children: <Widget>[
-          OutlineButton(
-            child: Text('Lihat koordinat'),
-            onPressed: () async {
-              final CompassEvent tmp = await FlutterCompass.events.first;
-              setState(() {
-                _lastRead = tmp;
-                _lastReadAt = DateTime.now();
-              });
-            },
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Text(
-                  '$_lastRead',
-                  style: Theme.of(context).textTheme.caption,
-                ),
-                Text(
-                  '${_lastReadAt ?? 'No Data'}',
-                  style: Theme.of(context).textTheme.caption,
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -176,53 +90,63 @@ class _QiblaPageState extends State<QiblaPage> with TickerProviderStateMixin {
         }
 
         double direction = snapshot.data.heading;
-
-        return Container(
-          alignment: Alignment.center,
-          child: Transform.rotate(
-            angle: ((direction ?? 0) * (math.pi / 180) * -1),
-            child: Image.asset('assets/images/compass.png'),
+        return Center(
+          child: Container(
+            child: Transform.rotate(
+              angle: ((direction ?? 0) * (math.pi / 180) * -1),
+              child: Image.asset('assets/images/compass.png'),
+            ),
           ),
         );
       },
     );
   }
 
-  Widget _buildPermissionSheet() {
-    return Container(
-      padding: EdgeInsets.all(20),
-      child: Column(
-        // mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Spacer(),
-          Text('Location Permission Required'),
-          Spacer(),
-          SizedBox(
-            width: double.infinity,
-            child: OutlineButton(
-              child: Text('Request Permissions'),
-              onPressed: () async {
-                await Permission.locationWhenInUse
-                    .request()
-                    .isGranted
-                    .then((value) {
-                  setState(() {
-                    _hasPermissions = value;
-                  });
-                });
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget appBar() {
+  Widget appBar(BuildContext context) {
     return DongkapAppBar(
       animationController: widget.animationController,
-      topBarOpacity: _topBarOpacity,
-      title: DongkapLocalizations.of(context).qibla,
+      topBarOpacity: 0.0,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: SizedBox(
+            height: 40,
+            width: 40,
+            child: InkWell(
+              highlightColor: AppTheme.darkBlueGrey.withOpacity(0.2),
+              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+              onTap: () {
+                Navigator.of(context).pop(true);
+              },
+              child: Center(
+                child: SvgPicture.asset(
+                  'assets/eva_icons/outline/svg/arrow-back-outline.svg',
+                  color: Theme.of(context).appBarTheme.iconTheme.color,
+                ),
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              DongkapLocalizations.of(context).qibla,
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 22 + 6 - 6 * 0.0,
+                color: Theme.of(context).appBarTheme.titleTextStyle.color,
+                fontFamily:
+                    Theme.of(context).appBarTheme.titleTextStyle.fontFamily,
+                fontWeight:
+                    Theme.of(context).appBarTheme.titleTextStyle.fontWeight,
+                letterSpacing:
+                    Theme.of(context).appBarTheme.titleTextStyle.letterSpacing,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

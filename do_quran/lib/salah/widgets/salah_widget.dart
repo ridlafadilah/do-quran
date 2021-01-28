@@ -33,7 +33,6 @@ class _SalahWidgetState extends State<SalahWidget> {
   double _statusBarHeight = 0.0;
   double _appBarHeight = 0.0;
   int _curTime = DatetimeUtils.timeToInt(DatetimeUtils.getTime('HH:mm'));
-  String _curDate = DatetimeUtils.getTime('yyyy-MM-dd');
   bool _statusFajr = false,
       _statusDhuhr = false,
       _statusAsr = false,

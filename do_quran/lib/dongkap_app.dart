@@ -6,7 +6,7 @@ import 'package:do_quran/environments/environment.dart';
 import 'package:do_quran/l10n/bloc/translation_bloc.dart';
 import 'package:do_quran/main/main_layout.dart';
 import 'package:do_quran/theme/bloc/thememode_bloc.dart';
-import 'package:do_quran/view/page_splash.dart';
+import 'package:do_quran/splash/splash_page.dart';
 import 'package:do_theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -106,7 +106,7 @@ class _DongkapAppViewState extends State<DongkapAppView> {
                 );
               },
               onGenerateRoute: (_) => MaterialPageRoute<dynamic>(
-                  builder: (BuildContext context) => PageSplash()),
+                  builder: (BuildContext context) => SplashPage()),
             );
           },
         );

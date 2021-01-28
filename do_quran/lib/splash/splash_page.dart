@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:progress_indicators/progress_indicators.dart';
-import 'package:do_quran/baseurl/base_app.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class PageSplash extends StatelessWidget {
+class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,7 +23,7 @@ class PageSplash extends StatelessWidget {
             Align(
               alignment: Alignment(0, 0.85),
               child: JumpingDotsProgressIndicator(
-                fontSize: Size.size32,
+                fontSize: 32.0,
                 color: Colors.white,
               ),
             )

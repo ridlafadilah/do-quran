@@ -1,5 +1,5 @@
 import 'package:do_core/models.dart';
-import 'package:do_quran/model/assets.dart';
+import 'package:do_quran/models/assets.dart';
 import 'package:do_quran/quran/surah_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
