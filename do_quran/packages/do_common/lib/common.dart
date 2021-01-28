@@ -22,5 +22,6 @@ export 'forms/number.dart';
 export 'forms/password.dart';
 export 'forms/phone_number.dart';
 export 'forms/place_of_birth.dart';
+export 'forms/surah_field.dart';
 export 'forms/text.dart';
 export 'forms/username.dart';

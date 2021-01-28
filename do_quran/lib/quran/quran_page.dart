@@ -1,6 +1,7 @@
 import 'package:do_common/common.dart';
 import 'package:do_quran/generated/l10n.dart';
 import 'package:do_quran/quran/bloc/quran_bloc.dart';
+import 'package:do_quran/quran/widgets/quran_search_widget.dart';
 import 'package:do_quran/quran/widgets/quran_skeleton_widget.dart';
 import 'package:do_quran/quran/widgets/quran_widget.dart';
 import 'package:do_theme/theme.dart';
@@ -179,7 +180,9 @@ class _QuranPageState extends State<QuranPage> with TickerProviderStateMixin {
             child: InkWell(
               highlightColor: AppTheme.darkGrey.withOpacity(0.2),
               borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-              onTap: () {},
+              onTap: () {
+                _searchQuran(context);
+              },
               child: Center(
                 child: SvgPicture.asset(
                   'assets/eva_icons/outline/svg/search-outline.svg',
@@ -190,6 +193,22 @@ class _QuranPageState extends State<QuranPage> with TickerProviderStateMixin {
           ),
         ),
       ],
+    );
+  }
+
+  void _searchQuran(BuildContext context) async {
+    await showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (_) {
+        return Center(
+          child: QuranSearchWidget(
+            title: DongkapLocalizations.of(context).promptSearchQuranTitle,
+            descriptions:
+                DongkapLocalizations.of(context).promptSearchQuranDescription,
+          ),
+        );
+      },
     );
   }
 }

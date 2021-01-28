@@ -56,6 +56,7 @@
     "alquran": "Al-Qur'an",
   
     "hintUsernameEmail": "Username / Email",
+    "hintSearchQuran": "Ketik surat & nomor ayat",
 
     "ERR_LOAD_FILE": "Gagal memuat file",
     "ERR_CANCELLED": "Permintaan dibatalkan",
@@ -141,6 +142,8 @@
           "value": {}
       }
     },
+    "promptSearchQuranTitle": "Cari Surat & Ayat",
+    "promptSearchQuranDescription": "Tips pencarian:\nbaqarah 25, ikhlas, 1:5, 3 10",
   
     "buttonSubmit": "Submit",
     "buttonCancel": "Batal"

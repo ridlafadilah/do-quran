@@ -56,6 +56,7 @@
     "alquran": "Al-Qur'an",
   
     "hintUsernameEmail": "Username / Email",
+    "hintSearchQuran": "Type surah & ayat number",
 
     "ERR_LOAD_FILE": "Failed to load file",
     "ERR_CANCELLED": "Request was cancelled",
@@ -141,6 +142,8 @@
           "value": {}
       }
     },
+    "promptSearchQuranTitle": "Search Surah & Ayat",
+    "promptSearchQuranDescription": "Search the quran anything you like.\nSome tips: baqarah 25, ikhlas, 1:5, 3 10",
   
     "buttonSubmit": "Submit",
     "buttonCancel": "Cancel"

@@ -66,7 +66,7 @@ class _QuranWidgetState extends State<QuranWidget> {
                     ),
                     Text(
                       '''
-${widget.quranInfo[index].translationIndonesia} | ${widget.quranInfo[index].ayahCount} ayat''',
+${index + 1}. ${widget.quranInfo[index].translationIndonesia} | ${widget.quranInfo[index].ayahCount} ayat''',
                       style: TextStyle(
                         fontSize: 12.0,
                         color: Colors.grey,

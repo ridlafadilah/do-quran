@@ -535,6 +535,16 @@ class DongkapLocalizations {
     );
   }
 
+  /// `Type surah & ayat number`
+  String get hintSearchQuran {
+    return Intl.message(
+      'Type surah & ayat number',
+      name: 'hintSearchQuran',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Failed to load file`
   String get ERR_LOAD_FILE {
     return Intl.message(
@@ -1072,6 +1082,26 @@ class DongkapLocalizations {
       name: 'promptLanguageSubtitle',
       desc: '',
       args: [value],
+    );
+  }
+
+  /// `Search Surah & Ayat`
+  String get promptSearchQuranTitle {
+    return Intl.message(
+      'Search Surah & Ayat',
+      name: 'promptSearchQuranTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search the quran anything you like.\nSome tips: baqarah 25, ikhlas, 1:5, 3 10`
+  String get promptSearchQuranDescription {
+    return Intl.message(
+      'Search the quran anything you like.\nSome tips: baqarah 25, ikhlas, 1:5, 3 10',
+      name: 'promptSearchQuranDescription',
+      desc: '',
+      args: [],
     );
   }
 
