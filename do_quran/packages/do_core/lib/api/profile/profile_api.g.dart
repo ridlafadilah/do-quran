@@ -41,7 +41,6 @@ class _ProfileAPI implements ProfileAPI {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(profile?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>(
         '/do/api/profile/trx/post/profile/v.1',
         queryParameters: queryParameters,

@@ -1,4 +1,4 @@
-import 'package:do_quran/model/quran/tafsir_id.dart';
+import 'package:do_core/models/quran/tafsir_id.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'tafsir.g.dart';

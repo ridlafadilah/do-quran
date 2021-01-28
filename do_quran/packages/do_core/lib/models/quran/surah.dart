@@ -1,5 +1,5 @@
-import 'package:do_quran/model/quran/tafsir.dart';
-import 'package:do_quran/model/quran/translations.dart';
+import 'package:do_core/models/quran/tafsir.dart';
+import 'package:do_core/models/quran/translations.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'surah.g.dart';

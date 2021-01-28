@@ -1,6 +1,6 @@
 import 'package:do_common/common.dart';
+import 'package:do_core/models.dart';
 import 'package:do_quran/generated/l10n.dart';
-import 'package:do_quran/model/quran/quran_info.dart';
 import 'package:do_quran/quran/bloc/surah_bloc.dart';
 import 'package:do_quran/quran/widgets/surah_skeleton_widget.dart';
 import 'package:do_quran/quran/widgets/surah_widget.dart';

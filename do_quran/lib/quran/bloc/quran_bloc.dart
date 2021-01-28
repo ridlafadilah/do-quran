@@ -1,6 +1,5 @@
-import 'package:do_core/exceptions/server_error_exception.dart';
-import 'package:do_quran/model/quran/quran_info.dart';
-import 'package:do_quran/services/quran_service.dart';
+import 'package:do_core/core.dart';
+import 'package:do_core/models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

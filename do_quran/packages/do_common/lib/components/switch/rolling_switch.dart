@@ -78,7 +78,6 @@ class _RollingSwitchState extends State<RollingSwitch>
 
   @override
   Widget build(BuildContext context) {
-    Color transitionColor = Color.lerp(widget.colorOff, widget.colorOn, value);
     Color transitionCircleColor =
         Color.lerp(widget.colorIconOff, widget.colorIconOn, value);
 

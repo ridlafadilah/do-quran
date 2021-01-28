@@ -22,7 +22,6 @@ class _AuthAPI implements AuthAPI {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>('/do/oauth/signup',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -43,7 +42,6 @@ class _AuthAPI implements AuthAPI {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>('/do/oauth/token',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -66,7 +64,6 @@ class _AuthAPI implements AuthAPI {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>(
         '/do/oauth/token-verifier',
         queryParameters: queryParameters,
@@ -90,7 +87,6 @@ class _AuthAPI implements AuthAPI {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>(
         '/do/oauth/request-forgot-password',
         queryParameters: queryParameters,
@@ -112,7 +108,6 @@ class _AuthAPI implements AuthAPI {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>(
         '/do/oauth/verification-forgot-password',
         queryParameters: queryParameters,
@@ -134,7 +129,6 @@ class _AuthAPI implements AuthAPI {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>(
         '/do/oauth/forgot-password',
         queryParameters: queryParameters,

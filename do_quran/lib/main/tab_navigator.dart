@@ -1,4 +1,4 @@
-import 'package:do_quran/prayer/shalat_page.dart';
+import 'package:do_quran/salah/salah_page.dart';
 import 'package:do_quran/quran/quran_page.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +30,7 @@ class _TabNavigatorState extends State<TabNavigator> {
       TabNavigatorRoutes.bookmarks: (context) =>
           QuranPage(animationController: widget.animationController),
       TabNavigatorRoutes.prayer: (context) =>
-          ShalatPage(animationController: widget.animationController),
+          SalahPage(animationController: widget.animationController),
       TabNavigatorRoutes.profile: (context) =>
           QuranPage(animationController: widget.animationController),
     };

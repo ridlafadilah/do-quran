@@ -1,4 +1,4 @@
-import 'package:do_quran/model/quran/kemenag.dart';
+import 'package:do_core/models/quran/kemenag.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'tafsir_id.g.dart';

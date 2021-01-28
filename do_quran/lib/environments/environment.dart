@@ -4,6 +4,9 @@ class Environment {
 
   Map<String, dynamic> get hosts => {
         'hosts': {
+          'pray': {
+            'host': 'https://api.pray.zone',
+          },
           'openapi': {
             'host': 'http://192.168.1.100:8085',
           },

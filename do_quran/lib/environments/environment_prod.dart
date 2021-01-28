@@ -8,6 +8,9 @@ class EnvironmentProduction extends Environment {
   @override
   Map<String, dynamic> get hosts => {
         'hosts': {
+          'pray': {
+            'host': 'https://api.pray.zone',
+          },
           'openapi': {
             'host': 'https://dongkap-api.herokuapp.com',
           },

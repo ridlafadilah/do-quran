@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:do_quran/model/quran/surah.dart';
+import 'package:do_core/models.dart';
 import 'package:flutter/material.dart';
 
 class SurahWidget extends StatefulWidget {
