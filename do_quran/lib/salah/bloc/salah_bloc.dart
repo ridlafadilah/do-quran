@@ -9,9 +9,10 @@ part 'salah_state.dart';
 
 class SalahBloc extends Bloc<SalahEvent, SalahState> {
   SalahBloc() : super(InitialState());
+
   String latitude;
   String longitude;
-  String location = '';
+  String location;
 
   @override
   Stream<SalahState> mapEventToState(SalahEvent event) async* {
@@ -63,7 +64,7 @@ class SalahBloc extends Bloc<SalahEvent, SalahState> {
     try {
       Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
       geolocator
-          .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+          .getCurrentPosition(desiredAccuracy: LocationAccuracy.medium)
           .then((value) async {
         List<Placemark> daftarPlace = await geolocator.placemarkFromCoordinates(
             value.latitude, value.longitude);
@@ -73,5 +74,8 @@ class SalahBloc extends Bloc<SalahEvent, SalahState> {
         longitude = value.longitude.toString();
       }).catchError((e) {});
     } catch (error) {}
+    if (location == null) {
+      location = 'Jakarta';
+    }
   }
 }

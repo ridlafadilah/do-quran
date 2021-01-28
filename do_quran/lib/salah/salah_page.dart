@@ -3,7 +3,6 @@ import 'package:do_quran/generated/l10n.dart';
 import 'package:do_quran/salah/bloc/salah_bloc.dart';
 import 'package:do_quran/salah/widgets/salah_skeleton_widget.dart';
 import 'package:do_quran/salah/widgets/salah_widget.dart';
-import 'package:do_theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -59,20 +58,12 @@ class _SalahPageState extends State<SalahPage> with TickerProviderStateMixin {
         child: BlocBuilder<SalahBloc, SalahState>(
           builder: (BuildContext context, SalahState state) {
             if (state is RequestSuccessMonthState) {
-              return RefreshIndicator(
-                backgroundColor: Theme.of(context).dialogTheme.backgroundColor,
-                color: AppTheme.colorTheme,
-                strokeWidth: 3,
-                child: SalahWidget(
-                  scrollController: _scrollController,
-                  animationController: widget.animationController,
-                  pray: state.pray,
-                  datetime: state.datetime,
-                  location: state.location,
-                ),
-                onRefresh: () async {
-                  context.read<SalahBloc>().add(const RequestedMonthEvent());
-                },
+              return SalahWidget(
+                scrollController: _scrollController,
+                animationController: widget.animationController,
+                pray: state.pray,
+                datetime: state.datetime,
+                location: state.location,
               );
             } else if (state is RequestFailureMonthState) {
               return ConnectionErrorWidget(

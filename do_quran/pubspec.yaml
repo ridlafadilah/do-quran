@@ -63,6 +63,7 @@ flutter:
     - assets/avatars/
     - assets/eva_icons/fill/svg/
     - assets/eva_icons/outline/svg/
+    - assets/icons/
     - assets/images/
     - assets/surah/
 

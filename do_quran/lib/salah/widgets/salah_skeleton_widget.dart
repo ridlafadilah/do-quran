@@ -2,6 +2,7 @@ import 'package:do_core/core.dart';
 import 'package:do_core/models.dart';
 import 'package:do_quran/helper/remove_glow.dart';
 import 'package:do_quran/qibla/qibla_page.dart';
+import 'package:do_theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
@@ -46,41 +47,50 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
                 collapsedHeight: 60,
                 title: Align(
                   alignment: Alignment.bottomLeft,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '',
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                      Text(
-                        DatetimeUtils.getTime('dd MMM yyyy'),
-                        style: TextStyle(color: Colors.white, fontSize: 12),
-                      )
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10.0, top: 15.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '',
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: Text(
+                            DatetimeUtils.getTime('dd MMM yyyy'),
+                            style: TextStyle(color: Colors.white, fontSize: 12),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 actions: [
                   IconButton(
-                      icon: Icon(
-                        Icons.location_searching,
+                      icon: SvgPicture.asset(
+                        'assets/icons/location.svg',
                         color: Colors.white,
                       ),
                       onPressed: () {}),
-                  IconButton(
-                      icon: SvgPicture.asset(
-                        'assets/eva_icons/outline/svg/compass-outline.svg',
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute<dynamic>(
-                            builder: (BuildContext context) => QiblaPage(
-                                animationController:
-                                    widget.animationController),
-                          ),
-                        );
-                      }),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15.0),
+                    child: IconButton(
+                        icon: SvgPicture.asset(
+                          'assets/eva_icons/outline/svg/compass-outline.svg',
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute<dynamic>(
+                              builder: (BuildContext context) => QiblaPage(
+                                  animationController:
+                                      widget.animationController),
+                            ),
+                          );
+                        }),
+                  ),
                 ],
                 flexibleSpace: Container(
                   decoration: BoxDecoration(
@@ -120,7 +130,7 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
         body: Stack(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(top: _appBarHeight),
+              margin: EdgeInsets.only(top: _appBarHeight - 5),
               child: ScrollConfiguration(
                 behavior: RemoveGlow(),
                 child: mainView(),
@@ -133,53 +143,143 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
   }
 
   Widget mainView() {
-    return Shimmer.fromColors(
-      baseColor: Theme.of(context).colorScheme.primaryVariant,
-      highlightColor: Theme.of(context).colorScheme.secondaryVariant,
-      child: ListView.builder(
-        physics: BouncingScrollPhysics(),
-        scrollDirection: Axis.vertical,
-        itemCount: 15,
-        itemBuilder: (context, index) => InkWell(
-          onTap: () {},
-          child: Container(
-            margin: (index == 0)
-                ? EdgeInsets.all(4.0)
-                : EdgeInsets.only(left: 4.0, right: 4.0, bottom: 4.0),
-            child: Card(
-              elevation: 4,
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+    return ListView.builder(
+      physics: BouncingScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      itemCount: 15,
+      itemBuilder: (context, index) => Padding(
+        padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardTheme.color,
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(8.0),
+                bottomLeft: Radius.circular(8.0),
+                bottomRight: Radius.circular(8.0),
+                topRight: Radius.circular(40.0)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                  color:
+                      Theme.of(context).cardTheme.shadowColor.withOpacity(0.2),
+                  offset: const Offset(1.1, 1.1),
+                  blurRadius: 10.0),
+            ],
+          ),
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 16, left: 16, right: 24),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin:
-                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            '',
-                            style:
-                                TextStyle(fontSize: 14.0, color: Colors.black),
-                          ),
-                          Spacer(),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(bottom: 8.0),
-                      child: Divider(
-                        height: 1,
-                        color: Colors.grey[500],
-                      ),
-                    ),
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.calendar_today,
+                                  color: AppTheme.darkBlueGrey.withOpacity(0.5),
+                                  size: 16,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 4.0, left: 4.0),
+                                  child: Shimmer.fromColors(
+                                    baseColor: Theme.of(context)
+                                        .colorScheme
+                                        .primaryVariant,
+                                    highlightColor: Theme.of(context)
+                                        .colorScheme
+                                        .secondaryVariant,
+                                    child: Container(
+                                      color: Colors.white,
+                                      width: 100.0,
+                                      height: 15.0,
+                                      child: Text(''),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                      ],
+                    )
                   ],
                 ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 24, right: 24, top: 8, bottom: 8),
+                child: Container(
+                  height: 2,
+                  decoration: const BoxDecoration(
+                    color: AppTheme.lightBlueGrey,
+                    borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 24, right: 24, top: 8, bottom: 16),
+                child: Row(
+                  children: <Widget>[
+                    _salahPerDate(),
+                    _salahPerDate(),
+                    _salahPerDate(),
+                    _salahPerDate(),
+                    _salahPerDate(),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
+      ),
+    );
+  }
+
+  _salahPerDate() {
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0),
+            child: Shimmer.fromColors(
+              baseColor: Theme.of(context).colorScheme.primaryVariant,
+              highlightColor: Theme.of(context).colorScheme.secondaryVariant,
+              child: Container(
+                color: Colors.white,
+                width: 50.0,
+                height: 15.0,
+                child: Text(''),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Shimmer.fromColors(
+              baseColor: Theme.of(context).colorScheme.primaryVariant,
+              highlightColor: Theme.of(context).colorScheme.secondaryVariant,
+              child: Container(
+                color: Colors.white,
+                width: 50.0,
+                height: 15.0,
+                child: Text(''),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

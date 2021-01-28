@@ -73,7 +73,12 @@ class _RollingSwitchState extends State<RollingSwitch>
       });
     });
     turnState = widget.value;
-    _determine();
+    //_determine();
+    setState(() {
+      (turnState)
+          ? animationController.forward()
+          : animationController.reverse();
+    });
   }
 
   @override
