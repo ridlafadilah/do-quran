@@ -1,3 +1,4 @@
+import 'package:do_core/models/quran/quran_info.dart';
 import 'package:do_quran/generated/l10n.dart';
 import 'package:do_quran/quran/bloc/search_quran_bloc.dart';
 import 'package:do_theme/theme.dart';
@@ -17,18 +18,20 @@ class QuranSearchWidget extends StatefulWidget {
 
 class _QuranSearchWidgetState extends State<QuranSearchWidget> {
   bool resultSearching = false;
+  List<QuranInfo> quran = [];
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        return SearchQuranBloc();
+        return SearchQuranBloc()..add(const InitialQuranEvent());
       },
       child: BlocListener<SearchQuranBloc, SearchQuranState>(
         listener: (context, state) {
           if (state.action.isValidated) {
             setState(() {
-              resultSearching = true;
+              quran = state.quran;
+              resultSearching = state.quran != null ?? false;
             });
           } else {
             setState(() {
@@ -122,28 +125,36 @@ class _QuranSearchWidgetState extends State<QuranSearchWidget> {
               ),
               Visibility(
                   child: Expanded(
-                    child: ListView(
-                      padding:
-                          EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(top: 10.0),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              highlightColor: AppTheme.lightGrey,
-                              onTap: () {
-                                print('');
-                              },
-                              child: Container(
-                                  child: Text(
-                                'Al-Baqarah',
-                                style: TextStyle(color: Color(0xFF21A7FF)),
-                              )),
-                            ),
+                    child: ListView.builder(
+                      itemCount: quran.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                              left: 10.0, right: 10.0, top: 10.0),
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.only(top: 10.0),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    highlightColor: AppTheme.lightGrey,
+                                    onTap: () {
+                                      print(quran[index].latin);
+                                    },
+                                    child: Container(
+                                        child: Text(
+                                      quran[index].latin,
+                                      style:
+                                          TextStyle(color: Color(0xFF21A7FF)),
+                                    )),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                        );
+                      },
                     ),
                   ),
                   visible: resultSearching),
