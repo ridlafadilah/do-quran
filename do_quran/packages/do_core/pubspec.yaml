@@ -15,6 +15,7 @@ dependencies:
   firebase_auth:
   google_sign_in: ^4.5.6
   camera: ^0.5.8+17
+  sqflite:
   path_provider:
   path:
   equatable: ^1.2.5

@@ -25,6 +25,7 @@ class _QuranPageState extends State<QuranPage> with TickerProviderStateMixin {
   @override
   void initState() {
     _scrollController.addListener(() {
+      print(_scrollController.offset);
       if (_scrollController.offset >= 24) {
         if (_topBarOpacity != 1.0) {
           setState(() {
@@ -203,6 +204,7 @@ class _QuranPageState extends State<QuranPage> with TickerProviderStateMixin {
       builder: (_) {
         return Center(
           child: QuranSearchWidget(
+            animationController: widget.animationController,
             title: DongkapLocalizations.of(context).promptSearchQuranTitle,
             descriptions:
                 DongkapLocalizations.of(context).promptSearchQuranDescription,

@@ -23,13 +23,23 @@ class SearchQuranBloc extends Bloc<CommonEvent, SearchQuranState> {
     }
     if (event is SurahChanged) {
       final surah = SurahField.dirty(event.surah);
+      final List<String> surahSearch =
+          event.surah.toLowerCase().split(RegExp(r'[ :]'));
+      int ayatSearch = 1;
+      if (surahSearch.length > 1) {
+        try {
+          ayatSearch = int.parse(surahSearch[1]);
+        } catch (e) {}
+      }
       final List<QuranInfo> data = quran
           .where((element) =>
-              element.latin.toLowerCase().contains(event.surah.toLowerCase()))
+              element.latin.toLowerCase().contains(surahSearch[0]) &&
+              element.ayahCount >= ayatSearch)
           .toList();
       yield state.copyWith(
         surah: surah,
         quran: data,
+        ayat: ayatSearch,
         action: Formz.validate([surah]),
         status: FormzStatus.pure,
         error: null,

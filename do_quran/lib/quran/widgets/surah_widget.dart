@@ -2,18 +2,23 @@ import 'dart:convert';
 
 import 'package:do_core/models.dart';
 import 'package:flutter/material.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class SurahWidget extends StatefulWidget {
   SurahWidget(
       {Key key,
-      this.scrollController,
+      this.itemScrollController,
+      this.itemPositionsListener,
       this.animationController,
-      @required this.surah})
+      @required this.surah,
+      this.ayat = 1})
       : super(key: key);
 
-  final ScrollController scrollController;
+  final ItemScrollController itemScrollController;
+  final ItemPositionsListener itemPositionsListener;
   final AnimationController animationController;
   final Surah surah;
+  final int ayat;
 
   @override
   _SurahWidgetState createState() => _SurahWidgetState();
@@ -22,6 +27,14 @@ class SurahWidget extends StatefulWidget {
 class _SurahWidgetState extends State<SurahWidget> {
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.ayat > 1) {
+        widget.itemScrollController.scrollTo(
+            index: widget.ayat - 1,
+            duration: Duration(milliseconds: 500),
+            curve: Curves.easeInOutCubic);
+      }
+    });
     super.initState();
   }
 
@@ -32,12 +45,10 @@ class _SurahWidgetState extends State<SurahWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      controller: widget.scrollController,
-      padding: EdgeInsets.only(
-        bottom: 62 + MediaQuery.of(context).padding.bottom,
-      ),
+    return ScrollablePositionedList.builder(
       itemCount: widget.surah.text.length,
+      itemScrollController: widget.itemScrollController,
+      itemPositionsListener: widget.itemPositionsListener,
       scrollDirection: Axis.vertical,
       itemBuilder: (BuildContext context, int index) {
         String key = widget.surah.text.keys.elementAt(index);
@@ -60,7 +71,7 @@ class _SurahWidgetState extends State<SurahWidget> {
                   ),
                 ),
                 Text(
-                  widget.surah.translations.id.text[key],
+                  '${widget.surah.translations.id.text[key]} ($key)',
                   style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.black,

@@ -8,44 +8,54 @@ import 'package:do_theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class SurahPage extends StatefulWidget {
-  const SurahPage({Key key, this.animationController, this.quranInfo})
+  const SurahPage(
+      {Key key, this.animationController, this.quranInfo, this.ayat = 1})
       : super(key: key);
 
   final AnimationController animationController;
   final QuranInfo quranInfo;
+  final int ayat;
 
   @override
   _SurahPageState createState() => _SurahPageState();
 }
 
 class _SurahPageState extends State<SurahPage> with TickerProviderStateMixin {
-  List<Widget> listViews = <Widget>[];
-  final ScrollController _scrollController = ScrollController();
   double _topBarOpacity = 0.0;
+  final ItemScrollController itemScrollController = ItemScrollController();
+  final ItemPositionsListener itemPositionsListener =
+      ItemPositionsListener.create();
 
   @override
   void initState() {
-    _scrollController.addListener(() {
-      if (_scrollController.offset >= 24) {
-        if (_topBarOpacity != 1.0) {
-          setState(() {
-            _topBarOpacity = 1.0;
-          });
-        }
-      } else if (_scrollController.offset <= 24 &&
-          _scrollController.offset >= 0) {
-        if (_topBarOpacity != _scrollController.offset / 24) {
-          setState(() {
-            _topBarOpacity = _scrollController.offset / 24;
-          });
-        }
-      } else if (_scrollController.offset <= 0) {
-        if (_topBarOpacity != 0.0) {
-          setState(() {
-            _topBarOpacity = 0.0;
-          });
+    itemPositionsListener.itemPositions.addListener(() {
+      ItemPosition position = itemPositionsListener.itemPositions.value
+          .firstWhere((element) => element.index == 0, orElse: () => null);
+      if (position != null) {
+        double val = position.itemLeadingEdge == 0.0
+            ? position.itemLeadingEdge
+            : -position.itemLeadingEdge * 1000;
+        if (val >= 24) {
+          if (_topBarOpacity != 1.0) {
+            setState(() {
+              _topBarOpacity = 1.0;
+            });
+          }
+        } else if (val <= 24 && val >= 0) {
+          if (_topBarOpacity != val / 24) {
+            setState(() {
+              _topBarOpacity = val / 24;
+            });
+          }
+        } else if (val <= 0) {
+          if (_topBarOpacity != 0.0) {
+            setState(() {
+              _topBarOpacity = 0.0;
+            });
+          }
         }
       }
     });
@@ -105,9 +115,12 @@ class _SurahPageState extends State<SurahPage> with TickerProviderStateMixin {
         builder: (BuildContext context, SurahState state) {
           if (state is RequestSuccessState) {
             return SurahWidget(
-                scrollController: _scrollController,
-                animationController: widget.animationController,
-                surah: state.surah);
+              itemScrollController: itemScrollController,
+              itemPositionsListener: itemPositionsListener,
+              animationController: widget.animationController,
+              surah: state.surah,
+              ayat: widget.ayat,
+            );
           } else if (state is RequestFailureState) {
             return ConnectionErrorWidget(
                 error: DongkapLocalizations.of(context).ERR_LOAD_FILE,

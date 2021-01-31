@@ -1,15 +1,18 @@
 import 'package:do_core/models/quran/quran_info.dart';
 import 'package:do_quran/generated/l10n.dart';
 import 'package:do_quran/quran/bloc/search_quran_bloc.dart';
+import 'package:do_quran/quran/surah_page.dart';
 import 'package:do_theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
 class QuranSearchWidget extends StatefulWidget {
-  const QuranSearchWidget({Key key, this.title, this.descriptions})
+  const QuranSearchWidget(
+      {Key key, this.animationController, this.title, this.descriptions})
       : super(key: key);
 
+  final AnimationController animationController;
   final String title, descriptions;
 
   @override
@@ -19,6 +22,7 @@ class QuranSearchWidget extends StatefulWidget {
 class _QuranSearchWidgetState extends State<QuranSearchWidget> {
   bool resultSearching = false;
   List<QuranInfo> quran = [];
+  int ayat = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +35,7 @@ class _QuranSearchWidgetState extends State<QuranSearchWidget> {
           if (state.action.isValidated) {
             setState(() {
               quran = state.quran;
+              ayat = state.ayat;
               resultSearching = state.quran != null ?? false;
             });
           } else {
@@ -140,11 +145,22 @@ class _QuranSearchWidgetState extends State<QuranSearchWidget> {
                                   child: InkWell(
                                     highlightColor: AppTheme.lightGrey,
                                     onTap: () {
-                                      print(quran[index].latin);
+                                      Navigator.of(context).pop(false);
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute<dynamic>(
+                                          builder: (BuildContext context) =>
+                                              SurahPage(
+                                            animationController:
+                                                widget.animationController,
+                                            quranInfo: quran[index],
+                                            ayat: ayat,
+                                          ),
+                                        ),
+                                      );
                                     },
                                     child: Container(
                                         child: Text(
-                                      quran[index].latin,
+                                      '${quran[index].latin}:$ayat',
                                       style:
                                           TextStyle(color: Color(0xFF21A7FF)),
                                     )),
