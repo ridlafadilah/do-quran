@@ -8,10 +8,10 @@ part of 'ayah_entity.dart';
 
 AyahEntity _$AyahEntityFromJson(Map<String, dynamic> json) {
   return AyahEntity(
-    json['id'] as int,
-    json['number_of_ayah'] as String,
-    json['text'] as String,
-    json['id_surah'] as String,
+    id: json['id'] as int,
+    numberOfAyah: json['number_of_ayah'] as String,
+    text: json['text'] as String,
+    idSurah: json['id_surah'] as String,
   );
 }
 

@@ -52,7 +52,7 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           '',
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
@@ -60,7 +60,8 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
                           padding: const EdgeInsets.only(top: 5.0),
                           child: Text(
                             DatetimeUtils.getTime('dd MMM yyyy'),
-                            style: TextStyle(color: Colors.white, fontSize: 12),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 12),
                           ),
                         ),
                       ],
@@ -93,15 +94,15 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
                   ),
                 ],
                 flexibleSpace: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color(0xFF21A7FF),
-                    borderRadius: const BorderRadius.only(
+                    borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(32.0),
                     ),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
                           color: Color(0xFF21A7FF),
-                          offset: const Offset(0.1, 0.1),
+                          offset: Offset(0.1, 0.1),
                           blurRadius: 10.0),
                     ],
                   ),
@@ -144,7 +145,7 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
 
   Widget mainView() {
     return ListView.builder(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
       itemCount: 15,
       itemBuilder: (context, index) => Padding(
@@ -203,7 +204,7 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
                                       color: Colors.white,
                                       width: 100.0,
                                       height: 15.0,
-                                      child: Text(''),
+                                      child: const Text(''),
                                     ),
                                   ),
                                 ),
@@ -262,7 +263,7 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
                 color: Colors.white,
                 width: 50.0,
                 height: 15.0,
-                child: Text(''),
+                child: const Text(''),
               ),
             ),
           ),
@@ -275,7 +276,7 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
                 color: Colors.white,
                 width: 50.0,
                 height: 15.0,
-                child: Text(''),
+                child: const Text(''),
               ),
             ),
           ),
@@ -286,11 +287,11 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
 
   _salahToday(String shalat, String time, bool status) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 4.0),
+      margin: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
         children: [
           Container(
-            margin: EdgeInsets.only(right: 16.0),
+            margin: const EdgeInsets.only(right: 16.0),
             child: Icon(
               Icons.access_time,
               color: (status) ? Colors.white : Colors.white70,
@@ -301,7 +302,7 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
               style: TextStyle(
                   color: (status) ? Colors.white : Colors.white70,
                   fontSize: 16.0)),
-          Spacer(),
+          const Spacer(),
           Text(time,
               style: TextStyle(
                   color: (status) ? Colors.white : Colors.white70,

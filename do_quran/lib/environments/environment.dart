@@ -7,6 +7,9 @@ class Environment {
           'pray': {
             'host': 'https://api.pray.zone',
           },
+          'quran': {
+            'host': 'https://ridlafadilah.github.io',
+          },
           'openapi': {
             'host': 'http://192.168.1.100:8085',
           },

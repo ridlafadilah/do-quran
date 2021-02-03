@@ -4,10 +4,10 @@ part 'translations_id.g.dart';
 
 @JsonSerializable()
 class TranslationsId {
-  TranslationsId(
+  TranslationsId({
     this.name,
     this.text,
-  );
+  });
 
   factory TranslationsId.fromJson(Map<String, dynamic> json) =>
       _$TranslationsIdFromJson(json);

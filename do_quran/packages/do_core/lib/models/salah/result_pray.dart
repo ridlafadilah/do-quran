@@ -24,6 +24,7 @@ class ResultPray {
 
   @override
   String toString() {
-    return 'ResultPray : {${'datetime: $datetime, '}${'location: $location, '}${'settings: $settings '}}';
+    return '''
+ResultPray : {${'datetime: $datetime, '}${'location: $location, '}${'settings: $settings '}}''';
   }
 }

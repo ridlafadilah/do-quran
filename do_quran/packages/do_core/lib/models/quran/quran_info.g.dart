@@ -8,14 +8,14 @@ part of 'quran_info.dart';
 
 QuranInfo _$QuranInfoFromJson(Map<String, dynamic> json) {
   return QuranInfo(
-    json['translation_id'] as String,
-    json['translation_en'] as String,
-    json['arabic'] as String,
-    json['latin'] as String,
-    json['ayah_count'] as int,
-    json['index'] as int,
-    json['opening'] as String,
-    json['closing'] as String,
+    translationIndonesia: json['translation_id'] as String,
+    translationEnglish: json['translation_en'] as String,
+    arabic: json['arabic'] as String,
+    latin: json['latin'] as String,
+    ayahCount: json['ayah_count'] as int,
+    index: json['index'] as int,
+    opening: json['opening'] as String,
+    closing: json['closing'] as String,
   );
 }
 

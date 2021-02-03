@@ -51,7 +51,7 @@ class _QuranSkeletonWidgetState extends State<QuranSkeletonWidget> {
                 Container(
                   width: widthLeading,
                   height: heightLeading,
-                  decoration: BoxDecoration(color: Colors.white),
+                  decoration: const BoxDecoration(color: Colors.white),
                 ),
               ],
             ),

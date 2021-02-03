@@ -4,8 +4,15 @@ part 'quran_info.g.dart';
 
 @JsonSerializable()
 class QuranInfo {
-  QuranInfo(this.translationIndonesia, this.translationEnglish, this.arabic,
-      this.latin, this.ayahCount, this.index, this.opening, this.closing);
+  QuranInfo(
+      {this.translationIndonesia,
+      this.translationEnglish,
+      this.arabic,
+      this.latin,
+      this.ayahCount,
+      this.index,
+      this.opening,
+      this.closing});
 
   factory QuranInfo.fromJson(Map<String, dynamic> json) =>
       _$QuranInfoFromJson(json);

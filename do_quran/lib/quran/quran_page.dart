@@ -25,7 +25,6 @@ class _QuranPageState extends State<QuranPage> with TickerProviderStateMixin {
   @override
   void initState() {
     _scrollController.addListener(() {
-      print(_scrollController.offset);
       if (_scrollController.offset >= 24) {
         if (_topBarOpacity != 1.0) {
           setState(() {
@@ -96,7 +95,7 @@ class _QuranPageState extends State<QuranPage> with TickerProviderStateMixin {
   Widget mainView() {
     return BlocProvider(
       create: (context) {
-        return QuranBloc()..add(RequestedEvent());
+        return QuranBloc()..add(const RequestedEvent());
       },
       child: BlocBuilder<QuranBloc, QuranState>(
         builder: (BuildContext context, QuranState state) {

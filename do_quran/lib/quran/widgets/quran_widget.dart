@@ -57,7 +57,7 @@ class _QuranWidgetState extends State<QuranWidget> {
                   children: [
                     Text(
                       widget.quranInfo[index].latin,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16.0,
                         color: Colors.black,
                         fontWeight: FontWeight.normal,
@@ -67,7 +67,7 @@ class _QuranWidgetState extends State<QuranWidget> {
                     Text(
                       '''
 ${index + 1}. ${widget.quranInfo[index].translationIndonesia} | ${widget.quranInfo[index].ayahCount} ayat''',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12.0,
                         color: Colors.grey,
                         fontWeight: FontWeight.normal,
@@ -76,7 +76,7 @@ ${index + 1}. ${widget.quranInfo[index].translationIndonesia} | ${widget.quranIn
                     )
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 SvgPicture.asset(
                   Assets.imagesSurah[index],
                   height: 32.0,

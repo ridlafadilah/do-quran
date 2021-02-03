@@ -5,7 +5,7 @@ part 'tafsir.g.dart';
 
 @JsonSerializable()
 class Tafsir {
-  Tafsir(this.id);
+  Tafsir({this.id});
 
   factory Tafsir.fromJson(Map<String, dynamic> json) => _$TafsirFromJson(json);
 

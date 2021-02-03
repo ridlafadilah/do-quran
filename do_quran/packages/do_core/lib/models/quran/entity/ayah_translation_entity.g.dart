@@ -9,11 +9,11 @@ part of 'ayah_translation_entity.dart';
 AyahTranslationEntity _$AyahTranslationEntityFromJson(
     Map<String, dynamic> json) {
   return AyahTranslationEntity(
-    json['id'] as int,
-    json['number_of_ayah'] as String,
-    json['text'] as String,
-    json['l10n'] as String,
-    json['id_surah'] as String,
+    id: json['id'] as int,
+    numberOfAyah: json['number_of_ayah'] as String,
+    text: json['text'] as String,
+    l10n: json['l10n'] as String,
+    idSurah: json['id_surah'] as String,
   );
 }
 

@@ -51,7 +51,7 @@ class _SurahSkeletonWidgetState extends State<SurahSkeletonWidget> {
                 Container(
                   width: widthLeading,
                   height: heightLeading,
-                  decoration: BoxDecoration(color: Colors.white),
+                  decoration: const BoxDecoration(color: Colors.white),
                 ),
               ],
             ),

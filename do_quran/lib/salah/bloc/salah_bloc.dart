@@ -63,7 +63,7 @@ class SalahBloc extends Bloc<SalahEvent, SalahState> {
   Future<void> getCurrenyLocation() async {
     try {
       Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
-      geolocator
+      await geolocator
           .getCurrentPosition(desiredAccuracy: LocationAccuracy.medium)
           .then((value) async {
         List<Placemark> daftarPlace = await geolocator.placemarkFromCoordinates(
@@ -74,8 +74,6 @@ class SalahBloc extends Bloc<SalahEvent, SalahState> {
         longitude = value.longitude.toString();
       }).catchError((e) {});
     } catch (error) {}
-    if (location == null) {
-      location = 'Jakarta';
-    }
+    location ??= 'Jakarta';
   }
 }

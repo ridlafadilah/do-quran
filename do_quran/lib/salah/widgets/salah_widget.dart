@@ -32,7 +32,7 @@ class SalahWidget extends StatefulWidget {
 class _SalahWidgetState extends State<SalahWidget> {
   double _statusBarHeight = 0.0;
   double _appBarHeight = 0.0;
-  int _curTime = DatetimeUtils.timeToInt(DatetimeUtils.getTime('HH:mm'));
+  final int _curTime = DatetimeUtils.timeToInt(DatetimeUtils.getTime('HH:mm'));
   bool _statusFajr = false,
       _statusDhuhr = false,
       _statusAsr = false,
@@ -85,13 +85,15 @@ class _SalahWidgetState extends State<SalahWidget> {
                       children: [
                         Text(
                           widget.location,
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 16),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 5.0),
                           child: Text(
                             DatetimeUtils.getTime('dd MMM yyyy'),
-                            style: TextStyle(color: Colors.white, fontSize: 12),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 12),
                           ),
                         )
                       ],
@@ -127,15 +129,15 @@ class _SalahWidgetState extends State<SalahWidget> {
                   ),
                 ],
                 flexibleSpace: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color(0xFF21A7FF),
-                    borderRadius: const BorderRadius.only(
+                    borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(32.0),
                     ),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
                           color: Color(0xFF21A7FF),
-                          offset: const Offset(0.1, 0.1),
+                          offset: Offset(0.1, 0.1),
                           blurRadius: 10.0),
                     ],
                   ),
@@ -183,7 +185,7 @@ class _SalahWidgetState extends State<SalahWidget> {
 
   Widget mainView() {
     return ListView.builder(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
       itemCount: widget.pray.results.datetime.length,
       itemBuilder: (context, index) => AnimatedBuilder(
@@ -332,11 +334,11 @@ class _SalahWidgetState extends State<SalahWidget> {
 
   _salahToday(String shalat, String time, bool status) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 4.0),
+      margin: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
         children: [
           Container(
-            margin: EdgeInsets.only(right: 16.0),
+            margin: const EdgeInsets.only(right: 16.0),
             child: Icon(
               Icons.access_time,
               color: (status) ? Colors.white : Colors.white70,
@@ -347,7 +349,7 @@ class _SalahWidgetState extends State<SalahWidget> {
               style: TextStyle(
                   color: (status) ? Colors.white : Colors.white70,
                   fontSize: 16.0)),
-          Spacer(),
+          const Spacer(),
           Text(time,
               style: TextStyle(
                   color: (status) ? Colors.white : Colors.white70,

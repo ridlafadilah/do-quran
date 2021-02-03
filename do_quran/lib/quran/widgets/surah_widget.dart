@@ -31,7 +31,7 @@ class _SurahWidgetState extends State<SurahWidget> {
       if (widget.ayat > 1) {
         widget.itemScrollController.scrollTo(
             index: widget.ayat - 1,
-            duration: Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 500),
             curve: Curves.easeInOutCubic);
       }
     });
@@ -63,7 +63,7 @@ class _SurahWidgetState extends State<SurahWidget> {
                 Text(
                   '${widget.surah.text[key]}',
                   textAlign: TextAlign.end,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18.0,
                     color: Colors.black,
                     fontWeight: FontWeight.normal,
@@ -72,7 +72,7 @@ class _SurahWidgetState extends State<SurahWidget> {
                 ),
                 Text(
                   '${widget.surah.translations.id.text[key]} ($key)',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16.0,
                     color: Colors.black,
                     fontWeight: FontWeight.normal,

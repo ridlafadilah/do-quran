@@ -8,7 +8,7 @@ part of 'tafsir_id.dart';
 
 TafsirId _$TafsirIdFromJson(Map<String, dynamic> json) {
   return TafsirId(
-    json['kemenag'] == null
+    kemenag: json['kemenag'] == null
         ? null
         : Kemenag.fromJson(json['kemenag'] as Map<String, dynamic>),
   );

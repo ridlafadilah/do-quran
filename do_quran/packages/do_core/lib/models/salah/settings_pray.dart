@@ -29,6 +29,7 @@ class SettingsPray {
 
   @override
   String toString() {
-    return 'SettingsPray : {${'timeformat: $timeformat, '}${'school: $school, '}${'juristic: $juristic, '}${'highlat: $highlat, '}${'fajrAngle: $fajrAngle, '}${'ishaAngle: $ishaAngle '}}';
+    return '''
+SettingsPray : {${'timeformat: $timeformat, '}${'school: $school, '}${'juristic: $juristic, '}${'highlat: $highlat, '}${'fajrAngle: $fajrAngle, '}${'ishaAngle: $ishaAngle '}}''';
   }
 }

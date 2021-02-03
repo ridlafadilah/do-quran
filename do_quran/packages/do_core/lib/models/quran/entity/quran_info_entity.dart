@@ -1,22 +1,24 @@
+import 'package:do_core/models/quran/entity/base_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'quran_info_entity.g.dart';
 
 @JsonSerializable()
-class QuranInfoEntity {
+class QuranInfoEntity extends BaseEntity {
   QuranInfoEntity(
-      this.translationIndonesia,
+      {this.translationIndonesia,
       this.translationEnglish,
       this.arabic,
       this.latin,
       this.ayahCount,
       this.index,
       this.opening,
-      this.closing);
+      this.closing});
 
   factory QuranInfoEntity.fromJson(Map<String, dynamic> json) =>
       _$QuranInfoEntityFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$QuranInfoEntityToJson(this);
 
   @JsonKey(name: 'translation_id')
@@ -27,6 +29,7 @@ class QuranInfoEntity {
   String latin;
   @JsonKey(name: 'ayah_count')
   int ayahCount;
+  @JsonKey(name: 'idx')
   int index;
   String opening;
   String closing;

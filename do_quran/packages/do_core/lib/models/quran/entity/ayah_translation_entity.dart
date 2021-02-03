@@ -1,20 +1,22 @@
+import 'package:do_core/models/quran/entity/base_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'ayah_translation_entity.g.dart';
 
 @JsonSerializable()
-class AyahTranslationEntity {
-  AyahTranslationEntity(
+class AyahTranslationEntity extends BaseEntity {
+  AyahTranslationEntity({
     this.id,
     this.numberOfAyah,
     this.text,
     this.l10n,
     this.idSurah,
-  );
+  });
 
   factory AyahTranslationEntity.fromJson(Map<String, dynamic> json) =>
       _$AyahTranslationEntityFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$AyahTranslationEntityToJson(this);
 
   int id;
@@ -27,6 +29,7 @@ class AyahTranslationEntity {
 
   @override
   String toString() {
-    return 'AyahTranslationEntity : {${'id: $id, '}${'numberOfAyah: $numberOfAyah, '}${'text: $text, '}${'l10n: $l10n, '}${'idSurah: $idSurah '}}';
+    return '''
+AyahTranslationEntity : {${'id: $id, '}${'numberOfAyah: $numberOfAyah, '}${'text: $text, '}${'l10n: $l10n, '}${'idSurah: $idSurah '}}''';
   }
 }

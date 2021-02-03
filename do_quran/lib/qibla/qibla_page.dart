@@ -84,7 +84,7 @@ class _QiblaPageState extends State<QiblaPage> with TickerProviderStateMixin {
             child: Container(
               width: 32,
               height: 32,
-              child: CircularProgressIndicator(),
+              child: const CircularProgressIndicator(),
             ),
           );
         }

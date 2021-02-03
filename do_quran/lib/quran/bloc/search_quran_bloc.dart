@@ -19,7 +19,7 @@ class SearchQuranBloc extends Bloc<CommonEvent, SearchQuranState> {
     CommonEvent event,
   ) async* {
     if (event is InitialQuranEvent) {
-      quran = await this.getData();
+      quran = await getData();
     }
     if (event is SurahChanged) {
       final surah = SurahField.dirty(event.surah);

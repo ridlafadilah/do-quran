@@ -5,7 +5,7 @@ part 'translations.g.dart';
 
 @JsonSerializable()
 class Translations {
-  Translations(this.id);
+  Translations({this.id});
 
   factory Translations.fromJson(Map<String, dynamic> json) =>
       _$TranslationsFromJson(json);

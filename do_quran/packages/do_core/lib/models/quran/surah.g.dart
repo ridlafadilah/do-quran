@@ -8,17 +8,17 @@ part of 'surah.dart';
 
 Surah _$SurahFromJson(Map<String, dynamic> json) {
   return Surah(
-    json['number'] as String,
-    json['name'] as String,
-    json['name_latin'] as String,
-    json['number_of_ayah'] as String,
-    (json['text'] as Map<String, dynamic>)?.map(
+    number: json['number'] as String,
+    name: json['name'] as String,
+    nameLatin: json['name_latin'] as String,
+    numberOfAyah: json['number_of_ayah'] as String,
+    text: (json['text'] as Map<String, dynamic>)?.map(
       (k, e) => MapEntry(k, e as String),
     ),
-    json['translations'] == null
+    translations: json['translations'] == null
         ? null
         : Translations.fromJson(json['translations'] as Map<String, dynamic>),
-    json['tafsir'] == null
+    tafsir: json['tafsir'] == null
         ? null
         : Tafsir.fromJson(json['tafsir'] as Map<String, dynamic>),
   );

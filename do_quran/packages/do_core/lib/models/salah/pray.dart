@@ -21,6 +21,7 @@ class Pray {
 
   @override
   String toString() {
-    return 'Pray : {${'code: $code, '}${'status: $status, '}${'results: $results '}}';
+    return '''
+Pray : {${'code: $code, '}${'status: $status, '}${'results: $results '}}''';
   }
 }

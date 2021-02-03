@@ -6,8 +6,14 @@ part 'surah.g.dart';
 
 @JsonSerializable()
 class Surah {
-  Surah(this.number, this.name, this.nameLatin, this.numberOfAyah, this.text,
-      this.translations, this.tafsir);
+  Surah(
+      {this.number,
+      this.name,
+      this.nameLatin,
+      this.numberOfAyah,
+      this.text,
+      this.translations,
+      this.tafsir});
 
   factory Surah.fromJson(Map<String, dynamic> json) => _$SurahFromJson(json);
 

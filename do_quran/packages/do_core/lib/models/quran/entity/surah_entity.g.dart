@@ -8,19 +8,10 @@ part of 'surah_entity.dart';
 
 SurahEntity _$SurahEntityFromJson(Map<String, dynamic> json) {
   return SurahEntity(
-    json['number'] as String,
-    json['name'] as String,
-    json['name_latin'] as String,
-    json['total_ayah'] as String,
-    (json['ayah'] as List)
-        ?.map((e) =>
-            e == null ? null : AyahEntity.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
-    (json['translations'] as List)
-        ?.map((e) => e == null
-            ? null
-            : AyahTranslationEntity.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+    number: json['number'] as String,
+    name: json['name'] as String,
+    nameLatin: json['name_latin'] as String,
+    totalAyah: json['total_ayah'] as String,
   );
 }
 
@@ -30,6 +21,4 @@ Map<String, dynamic> _$SurahEntityToJson(SurahEntity instance) =>
       'name': instance.name,
       'name_latin': instance.nameLatin,
       'total_ayah': instance.totalAyah,
-      'ayah': instance.ayah,
-      'translations': instance.translations,
     };

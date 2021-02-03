@@ -4,10 +4,10 @@ part 'kemenag.g.dart';
 
 @JsonSerializable()
 class Kemenag {
-  Kemenag(
+  Kemenag({
     this.name,
     this.text,
-  );
+  });
 
   factory Kemenag.fromJson(Map<String, dynamic> json) =>
       _$KemenagFromJson(json);

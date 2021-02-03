@@ -11,6 +11,9 @@ class EnvironmentProduction extends Environment {
           'pray': {
             'host': 'https://api.pray.zone',
           },
+          'quran': {
+            'host': 'https://ridlafadilah.github.io',
+          },
           'openapi': {
             'host': 'https://dongkap-api.herokuapp.com',
           },

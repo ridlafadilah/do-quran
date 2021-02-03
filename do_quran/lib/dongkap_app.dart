@@ -4,6 +4,7 @@ import 'package:do_quran/auth/auth.dart';
 import 'package:do_quran/configs/security_config.dart';
 import 'package:do_quran/environments/environment.dart';
 import 'package:do_quran/l10n/bloc/translation_bloc.dart';
+import 'package:do_quran/patch/bloc/patch_bloc.dart';
 import 'package:do_quran/main/main_layout.dart';
 import 'package:do_quran/theme/bloc/thememode_bloc.dart';
 import 'package:do_quran/splash/splash_page.dart';
@@ -30,6 +31,9 @@ class DongkapApp extends StatelessWidget {
         BlocProvider<AuthenticationBloc>(
           create: (_) => AuthenticationBloc(
               authService: RepositoryProvider.of<AuthService>(_)),
+        ),
+        BlocProvider<PatchBloc>(
+          create: (_) => PatchBloc()..add(const ModulePatchEvent()),
         ),
         BlocProvider<TranslationBloc>(
           create: (_) => TranslationBloc()..add(const TranslationEvent()),
@@ -92,15 +96,15 @@ class _DongkapAppViewState extends State<DongkapAppView> {
               supportedLocales: supportedLocales,
               locale: state.locale,
               builder: (context, child) {
-                return BlocListener<AuthenticationBloc, AuthenticationState>(
+                return BlocListener<PatchBloc, PatchState>(
                   listener: (context, state) async {
-                    await Future<dynamic>.delayed(
-                        const Duration(milliseconds: 5000));
-                    _navigator.pushAndRemoveUntil<void>(
-                      MaterialPageRoute<dynamic>(
-                          builder: (BuildContext context) => MainLayout()),
-                      (route) => false,
-                    );
+                    if (state is PatchSuccessState) {
+                      await _navigator.pushAndRemoveUntil<void>(
+                        MaterialPageRoute<dynamic>(
+                            builder: (BuildContext context) => MainLayout()),
+                        (route) => false,
+                      );
+                    }
                   },
                   child: child,
                 );

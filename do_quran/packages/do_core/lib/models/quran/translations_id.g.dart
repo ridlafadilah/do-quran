@@ -8,8 +8,8 @@ part of 'translations_id.dart';
 
 TranslationsId _$TranslationsIdFromJson(Map<String, dynamic> json) {
   return TranslationsId(
-    json['name'] as String,
-    (json['text'] as Map<String, dynamic>)?.map(
+    name: json['name'] as String,
+    text: (json['text'] as Map<String, dynamic>)?.map(
       (k, e) => MapEntry(k, e as String),
     ),
   );

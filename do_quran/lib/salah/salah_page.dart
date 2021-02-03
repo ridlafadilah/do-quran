@@ -53,7 +53,7 @@ class _SalahPageState extends State<SalahPage> with TickerProviderStateMixin {
       color: Theme.of(context).backgroundColor,
       child: BlocProvider(
         create: (context) {
-          return SalahBloc()..add(RequestedMonthEvent());
+          return SalahBloc()..add(const RequestedMonthEvent());
         },
         child: BlocBuilder<SalahBloc, SalahState>(
           builder: (BuildContext context, SalahState state) {

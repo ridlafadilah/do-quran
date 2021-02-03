@@ -8,7 +8,7 @@ part of 'tafsir.dart';
 
 Tafsir _$TafsirFromJson(Map<String, dynamic> json) {
   return Tafsir(
-    json['id'] == null
+    id: json['id'] == null
         ? null
         : TafsirId.fromJson(json['id'] as Map<String, dynamic>),
   );

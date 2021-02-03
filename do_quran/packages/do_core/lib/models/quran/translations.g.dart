@@ -8,7 +8,7 @@ part of 'translations.dart';
 
 Translations _$TranslationsFromJson(Map<String, dynamic> json) {
   return Translations(
-    json['id'] == null
+    id: json['id'] == null
         ? null
         : TranslationsId.fromJson(json['id'] as Map<String, dynamic>),
   );

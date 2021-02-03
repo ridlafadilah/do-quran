@@ -60,8 +60,8 @@ class _QuranSearchWidgetState extends State<QuranSearchWidget> {
     return Stack(
       children: <Widget>[
         Container(
-          padding:
-              EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0, bottom: 30.0),
+          padding: const EdgeInsets.only(
+              left: 20.0, top: 20.0, right: 20.0, bottom: 30.0),
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             color: Colors.white,
@@ -72,17 +72,18 @@ class _QuranSearchWidgetState extends State<QuranSearchWidget> {
             children: <Widget>[
               Text(
                 widget.title,
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                style:
+                    const TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Text(
                 widget.descriptions,
-                style: TextStyle(fontSize: 14),
+                style: const TextStyle(fontSize: 14),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               BlocBuilder<SearchQuranBloc, SearchQuranState>(
@@ -101,7 +102,7 @@ class _QuranSearchWidgetState extends State<QuranSearchWidget> {
                         },
                         autofocus: true,
                         cursorColor: AppTheme.grey,
-                        style: TextStyle(color: AppTheme.darkGrey),
+                        style: const TextStyle(color: AppTheme.darkGrey),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 5.0, horizontal: 15.0),
@@ -109,7 +110,7 @@ class _QuranSearchWidgetState extends State<QuranSearchWidget> {
                               borderRadius: BorderRadius.circular(5.0)),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: AppTheme.lightGrey,
                             ),
                           ),
@@ -119,7 +120,7 @@ class _QuranSearchWidgetState extends State<QuranSearchWidget> {
                               color: AppTheme.grey,
                             ),
                           ),
-                          hintStyle: TextStyle(color: AppTheme.lightGrey),
+                          hintStyle: const TextStyle(color: AppTheme.lightGrey),
                           hintText:
                               DongkapLocalizations.of(context).hintSearchQuran,
                         ),
@@ -134,12 +135,12 @@ class _QuranSearchWidgetState extends State<QuranSearchWidget> {
                       itemCount: quran.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                               left: 10.0, right: 10.0, top: 10.0),
                           child: Column(
                             children: [
                               Container(
-                                padding: EdgeInsets.only(top: 10.0),
+                                padding: const EdgeInsets.only(top: 10.0),
                                 child: Material(
                                   color: Colors.transparent,
                                   child: InkWell(
@@ -161,8 +162,8 @@ class _QuranSearchWidgetState extends State<QuranSearchWidget> {
                                     child: Container(
                                         child: Text(
                                       '${quran[index].latin}:$ayat',
-                                      style:
-                                          TextStyle(color: Color(0xFF21A7FF)),
+                                      style: const TextStyle(
+                                          color: Color(0xFF21A7FF)),
                                     )),
                                   ),
                                 ),

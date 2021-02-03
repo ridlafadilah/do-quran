@@ -8,8 +8,8 @@ part of 'kemenag.dart';
 
 Kemenag _$KemenagFromJson(Map<String, dynamic> json) {
   return Kemenag(
-    json['name'] as String,
-    (json['text'] as Map<String, dynamic>)?.map(
+    name: json['name'] as String,
+    text: (json['text'] as Map<String, dynamic>)?.map(
       (k, e) => MapEntry(k, e as String),
     ),
   )..source = json['source'] as String;
