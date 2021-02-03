@@ -23,15 +23,31 @@ class DBHelper {
       'text TEXT, '
       'id_surah TEXT, '
       'FOREIGN KEY (id_surah) REFERENCES surah (number) '
-      'ON DELETE NO ACTION ON UPDATE NO ACTION '
+      'ON DELETE CASCADE ON UPDATE NO ACTION '
       ')';
   static final String ayahTranslationTable = 'CREATE TABLE ayah_translation ('
       'id INTEGER PRIMARY KEY AUTOINCREMENT, '
+      'name_latin_surah TEXT, '
       'number_of_ayah TEXT, '
       'text TEXT, '
       'l10n TEXT, '
       'id_surah TEXT, '
       'FOREIGN KEY (id_surah) REFERENCES surah (number) '
-      'ON DELETE NO ACTION ON UPDATE NO ACTION '
+      'ON DELETE CASCADE ON UPDATE NO ACTION '
+      ')';
+  static final String categoryBookmarksTable =
+      'CREATE TABLE category_bookmarks ('
+      'id INTEGER PRIMARY KEY AUTOINCREMENT, '
+      'title TEXT, '
+      'type TEXT DEFAULT "PINNED" '
+      ')';
+  static final String ayahBookmarksTable = 'CREATE TABLE ayah_bookmarks ('
+      'id INTEGER PRIMARY KEY AUTOINCREMENT, '
+      'number_of_surah INTEGER, '
+      'number_of_ayah INTEGER, '
+      'description TEXT, '
+      'id_category INTEGER, '
+      'FOREIGN KEY (id_category) REFERENCES ayah_bookmarks (id) '
+      'ON DELETE CASCADE ON UPDATE NO ACTION '
       ')';
 }

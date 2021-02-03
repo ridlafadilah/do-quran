@@ -36,7 +36,7 @@ class _QuranSearchWidgetState extends State<QuranSearchWidget> {
             setState(() {
               quran = state.quran;
               ayat = state.ayat;
-              resultSearching = state.quran != null ?? false;
+              resultSearching = state.quran.isNotEmpty ?? false;
             });
           } else {
             setState(() {
@@ -91,7 +91,8 @@ class _QuranSearchWidgetState extends State<QuranSearchWidget> {
                     previous.surah != current.surah,
                 builder: (context, state) {
                   return Padding(
-                    padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                    padding: const EdgeInsets.only(
+                        left: 10.0, right: 10.0, bottom: 10.0),
                     child: Container(
                       height: 45.0,
                       child: TextField(
@@ -130,8 +131,9 @@ class _QuranSearchWidgetState extends State<QuranSearchWidget> {
                 },
               ),
               Visibility(
-                  child: Expanded(
+                  child: Flexible(
                     child: ListView.builder(
+                      shrinkWrap: true,
                       itemCount: quran.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(

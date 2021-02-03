@@ -21,8 +21,7 @@ class SurahDao extends BaseDao<SurahEntity> {
     List<Map<String, dynamic>> result = [];
     result = await db.query(
       tableName,
-      columns: ['number'],
-      where: '"number" = ?',
+      where: 'number = ?',
       whereArgs: [numberOfSurah],
     );
     List<SurahEntity> surahList = result.isNotEmpty
@@ -30,8 +29,7 @@ class SurahDao extends BaseDao<SurahEntity> {
         : [];
     result = await db.query(
       'ayah',
-      columns: ['id_surah'],
-      where: '"id_surah" = ?',
+      where: 'id_surah = ?',
       whereArgs: [numberOfSurah],
     );
     List<AyahEntity> ayahList = result.isNotEmpty
@@ -39,8 +37,7 @@ class SurahDao extends BaseDao<SurahEntity> {
         : [];
     result = await db.query(
       'ayah_translation',
-      columns: ['id_surah'],
-      where: '"id_surah" = ?',
+      where: 'id_surah = ?',
       whereArgs: [numberOfSurah],
     );
     List<AyahTranslationEntity> translations = result.isNotEmpty
@@ -91,11 +88,11 @@ class SurahDao extends BaseDao<SurahEntity> {
 
   Future deleteSurah(int numberOfSurah) async {
     final db = await dbProvider.database;
+    /*
     await db.delete('ayah', where: 'id_surah = ?', whereArgs: [numberOfSurah]);
     await db.delete('ayah_translation',
         where: 'id_surah = ?', whereArgs: [numberOfSurah]);
-    /*
-    await db.delete(tableName, where: 'number = ?', whereArgs: [numberOfSurah]);
     */
+    await db.delete(tableName, where: 'number = ?', whereArgs: [numberOfSurah]);
   }
 }

@@ -7,6 +7,7 @@ part 'ayah_translation_entity.g.dart';
 class AyahTranslationEntity extends BaseEntity {
   AyahTranslationEntity({
     this.id,
+    this.nameLatinSurah,
     this.numberOfAyah,
     this.text,
     this.l10n,
@@ -20,6 +21,8 @@ class AyahTranslationEntity extends BaseEntity {
   Map<String, dynamic> toJson() => _$AyahTranslationEntityToJson(this);
 
   int id;
+  @JsonKey(name: 'name_latin_surah')
+  String nameLatinSurah;
   @JsonKey(name: 'number_of_ayah')
   String numberOfAyah;
   String text;
@@ -30,6 +33,6 @@ class AyahTranslationEntity extends BaseEntity {
   @override
   String toString() {
     return '''
-AyahTranslationEntity : {${'id: $id, '}${'numberOfAyah: $numberOfAyah, '}${'text: $text, '}${'l10n: $l10n, '}${'idSurah: $idSurah '}}''';
+AyahTranslationEntity : {${'id: $id, '}${'nameLatinSurah: $nameLatinSurah, '}${'numberOfAyah: $numberOfAyah, '}${'text: $text, '}${'l10n: $l10n, '}${'idSurah: $idSurah '}}''';
   }
 }

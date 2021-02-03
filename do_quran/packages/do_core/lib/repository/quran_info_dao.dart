@@ -6,7 +6,8 @@ class QuranInfoDao extends BaseDao<QuranInfoEntity> {
 
   Future<List<QuranInfoEntity>> getAll() async {
     final db = await dbProvider.database;
-    final List<Map<String, dynamic>> result = await db.query(tableName);
+    final List<Map<String, dynamic>> result =
+        await db.query(tableName, orderBy: 'idx ASC');
     final List<QuranInfoEntity> quran = result.isNotEmpty
         ? result.map((item) => QuranInfoEntity.fromJson(item)).toList()
         : [];

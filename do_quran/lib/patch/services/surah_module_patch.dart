@@ -33,7 +33,11 @@ class SurahModulePatch extends CommonModulePatch {
     List<AyahTranslationEntity> ayahTranslationEntityList = [];
     _surah.translations.id.text.forEach((key, value) {
       final AyahTranslationEntity ayahTranslation = AyahTranslationEntity(
-          idSurah: _surah.number, numberOfAyah: key, text: value);
+        idSurah: _surah.number,
+        numberOfAyah: key,
+        text: value,
+        nameLatinSurah: _surah.translations.id.name,
+      );
       ayahTranslationEntityList.add(ayahTranslation);
     });
     surahEntity.ayah = ayahEntityList;

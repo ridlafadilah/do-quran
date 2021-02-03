@@ -35,6 +35,8 @@ class DatabaseProvider {
     await database.execute(DBHelper.surahTable);
     await database.execute(DBHelper.ayahTable);
     await database.execute(DBHelper.ayahTranslationTable);
+    await database.execute(DBHelper.categoryBookmarksTable);
+    await database.execute(DBHelper.ayahBookmarksTable);
   }
 
   static Future onConfigure(Database db) async {

@@ -27,7 +27,16 @@ class QuranBloc extends Bloc<QuranEvent, QuranState> {
     final List<QuranInfoEntity> quranEntities = await quranInfoDao.getAll();
     final List<QuranInfo> quranInfoList = [];
     quranEntities.forEach((quran) {
-      final QuranInfo quranInfo = QuranInfo.fromJson(quran.toJson());
+      final QuranInfo quranInfo = QuranInfo(
+        translationEnglish: quran.translationEnglish,
+        translationIndonesia: quran.translationIndonesia,
+        arabic: quran.arabic,
+        latin: quran.latin,
+        ayahCount: quran.ayahCount,
+        index: quran.index,
+        opening: quran.opening,
+        closing: quran.closing,
+      );
       quranInfoList.add(quranInfo);
     });
     return quranInfoList;
