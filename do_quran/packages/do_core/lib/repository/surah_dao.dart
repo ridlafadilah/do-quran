@@ -94,6 +94,8 @@ class SurahDao extends BaseDao<SurahEntity> {
     await db.delete('ayah', where: 'id_surah = ?', whereArgs: [numberOfSurah]);
     await db.delete('ayah_translation',
         where: 'id_surah = ?', whereArgs: [numberOfSurah]);
+    /*
     await db.delete(tableName, where: 'number = ?', whereArgs: [numberOfSurah]);
+    */
   }
 }

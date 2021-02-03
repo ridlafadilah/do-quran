@@ -12,7 +12,6 @@ class SurahModulePatch extends CommonModulePatch {
   @override
   Future<bool> doCheck() async {
     int count = await surahDao.countSurah(numberOfSurah);
-    print('$count = $totalAyah');
     return count == totalAyah ?? false;
   }
 
