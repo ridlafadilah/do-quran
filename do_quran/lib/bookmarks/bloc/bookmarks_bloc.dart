@@ -2,21 +2,19 @@ import 'package:do_core/core.dart';
 import 'package:do_core/models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 
-part 'salah_event.dart';
-part 'salah_state.dart';
+part 'bookmarks_event.dart';
+part 'bookmarks_state.dart';
 
-class SalahBloc extends Bloc<SalahEvent, SalahState> {
-  SalahBloc() : super(InitialState());
+class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
+  BookmarksBloc() : super(InitialState());
 
   String latitude;
   String longitude;
   String location;
 
   @override
-  Stream<SalahState> mapEventToState(SalahEvent event) async* {
+  Stream<BookmarksState> mapEventToState(BookmarksEvent event) async* {
     if (event is RequestedTodayEvent) {
       yield RequestInProgressTodayState();
       try {
@@ -62,20 +60,6 @@ class SalahBloc extends Bloc<SalahEvent, SalahState> {
   }
 
   Future<void> getCurrenyLocation() async {
-    try {
-      await Geolocator.getCurrentPosition(
-              desiredAccuracy: LocationAccuracy.medium,
-              forceAndroidLocationManager: true,
-              timeLimit: const Duration(seconds: 15))
-          .then((value) async {
-        List<Placemark> daftarPlace =
-            await placemarkFromCoordinates(value.latitude, value.longitude);
-        Placemark place = daftarPlace[0];
-        location = place.locality;
-        latitude = value.latitude.toString();
-        longitude = value.longitude.toString();
-      }).catchError((e) {});
-    } catch (error) {}
     location ??= 'Jakarta';
   }
 }

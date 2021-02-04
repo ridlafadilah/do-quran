@@ -47,7 +47,7 @@ class DBHelper {
       'number_of_ayah INTEGER, '
       'description TEXT, '
       'id_category INTEGER, '
-      'FOREIGN KEY (id_category) REFERENCES ayah_bookmarks (id) '
+      'FOREIGN KEY (id_category) REFERENCES category_bookmarks (id) '
       'ON DELETE CASCADE ON UPDATE NO ACTION '
       ')';
 }

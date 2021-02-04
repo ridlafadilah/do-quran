@@ -54,6 +54,8 @@
     "shalat": "Shalat",
     "qibla": "Qibla",
     "alquran": "Al-Qur'an",
+    "bookmarks": "Bookmarks",
+    "category": "Category",
   
     "hintUsernameEmail": "Username / Email",
     "hintSearchQuran": "Type surah & ayat number",

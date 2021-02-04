@@ -4,6 +4,7 @@ export 'api/auth/auth_api.dart';
 export 'api/profile/profile_api.dart';
 export 'api/security/security_api.dart';
 export 'exceptions/server_error_exception.dart';
+export 'repository/bookmarks_dao.dart';
 export 'repository/quran_info_dao.dart';
 export 'repository/surah_dao.dart';
 export 'services/auth_service.dart';

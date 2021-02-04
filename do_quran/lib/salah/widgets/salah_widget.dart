@@ -2,12 +2,11 @@ import 'package:do_core/core.dart';
 import 'package:do_core/models.dart';
 import 'package:do_quran/helper/remove_glow.dart';
 import 'package:do_quran/qibla/qibla_page.dart';
+import 'package:do_quran/salah/bloc/salah_bloc.dart';
 import 'package:do_theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import '../bloc/salah_bloc.dart';
 
 class SalahWidget extends StatefulWidget {
   SalahWidget(
@@ -130,13 +129,13 @@ class _SalahWidgetState extends State<SalahWidget> {
                 ],
                 flexibleSpace: Container(
                   decoration: const BoxDecoration(
-                    color: Color(0xFF21A7FF),
+                    color: AppTheme.colorTheme,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(32.0),
                     ),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                          color: Color(0xFF21A7FF),
+                          color: AppTheme.colorTheme,
                           offset: Offset(0.1, 0.1),
                           blurRadius: 10.0),
                     ],
@@ -200,7 +199,7 @@ class _SalahWidgetState extends State<SalahWidget> {
                     topLeft: Radius.circular(8.0),
                     bottomLeft: Radius.circular(8.0),
                     bottomRight: Radius.circular(8.0),
-                    topRight: Radius.circular(40.0)),
+                    topRight: Radius.circular(8.0)),
                 boxShadow: <BoxShadow>[
                   BoxShadow(
                       color: Theme.of(context)

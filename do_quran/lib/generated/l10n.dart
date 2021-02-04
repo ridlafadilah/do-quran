@@ -525,6 +525,26 @@ class DongkapLocalizations {
     );
   }
 
+  /// `Bookmarks`
+  String get bookmarks {
+    return Intl.message(
+      'Bookmarks',
+      name: 'bookmarks',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category`
+  String get category {
+    return Intl.message(
+      'Category',
+      name: 'category',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Username / Email`
   String get hintUsernameEmail {
     return Intl.message(

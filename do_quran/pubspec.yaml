@@ -20,7 +20,8 @@ dependencies:
   scrollable_positioned_list: ^0.1.9
   progress_indicators: ^0.1.5
   google_fonts_arabic: ^1.1.7
-  geolocator: ^5.2.1
+  geolocator: ^6.1.14
+  geocoding: ^1.0.5
   flutter_compass: ^0.5.1
   encrypt: ^4.1.0
   do_core:
