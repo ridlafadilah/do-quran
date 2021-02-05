@@ -20,9 +20,9 @@ class _BookmarksListViewWidgetState extends State<BookmarksListViewWidget> {
   Widget build(BuildContext context) {
     return ListView.builder(
         shrinkWrap: true,
+        physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.only(
-          top: 0,
-          bottom: 25 + MediaQuery.of(context).padding.bottom,
+          bottom: 15 + MediaQuery.of(context).padding.bottom,
         ),
         itemCount: 6,
         scrollDirection: Axis.vertical,
@@ -33,7 +33,7 @@ class _BookmarksListViewWidgetState extends State<BookmarksListViewWidget> {
 
   Widget getListBookmarks(String surah, int ayah) {
     return Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 16),
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).cardTheme.color,

@@ -131,7 +131,7 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
         body: Stack(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(top: _appBarHeight - 5),
+              margin: EdgeInsets.only(top: _appBarHeight + 10, bottom: 15),
               child: ScrollConfiguration(
                 behavior: RemoveGlow(),
                 child: mainView(),
@@ -149,7 +149,7 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
       scrollDirection: Axis.vertical,
       itemCount: 15,
       itemBuilder: (context, index) => Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+        padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).cardTheme.color,
@@ -157,7 +157,7 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
                 topLeft: Radius.circular(8.0),
                 bottomLeft: Radius.circular(8.0),
                 bottomRight: Radius.circular(8.0),
-                topRight: Radius.circular(40.0)),
+                topRight: Radius.circular(8.0)),
             boxShadow: <BoxShadow>[
               BoxShadow(
                   color:
@@ -169,57 +169,33 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
           child: Column(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top: 16, left: 16, right: 24),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+                child: Row(
                   children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(
-                                  Icons.calendar_today,
-                                  color: AppTheme.darkBlueGrey.withOpacity(0.5),
-                                  size: 16,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 4.0, left: 4.0),
-                                  child: Shimmer.fromColors(
-                                    baseColor: Theme.of(context)
-                                        .colorScheme
-                                        .primaryVariant,
-                                    highlightColor: Theme.of(context)
-                                        .colorScheme
-                                        .secondaryVariant,
-                                    child: Container(
-                                      color: Colors.white,
-                                      width: 100.0,
-                                      height: 15.0,
-                                      child: const Text(''),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
-                    )
+                    Icon(
+                      Icons.calendar_today,
+                      color: AppTheme.darkBlueGrey.withOpacity(0.5),
+                      size: 16,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4.0, left: 4.0),
+                      child: Shimmer.fromColors(
+                        baseColor: Theme.of(context).colorScheme.primaryVariant,
+                        highlightColor:
+                            Theme.of(context).colorScheme.secondaryVariant,
+                        child: Container(
+                          color: Colors.white,
+                          width: 100.0,
+                          height: 15.0,
+                          child: const Text(''),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(
-                    left: 24, right: 24, top: 8, bottom: 8),
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
                 child: Container(
                   height: 2,
                   decoration: const BoxDecoration(
@@ -230,7 +206,7 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
               ),
               Padding(
                 padding: const EdgeInsets.only(
-                    left: 24, right: 24, top: 8, bottom: 16),
+                    left: 16, right: 16, top: 10, bottom: 10),
                 child: Row(
                   children: <Widget>[
                     _salahPerDate(),
@@ -252,7 +228,7 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(top: 4.0),

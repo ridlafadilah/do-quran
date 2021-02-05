@@ -170,7 +170,7 @@ class _SalahWidgetState extends State<SalahWidget> {
         body: Stack(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(top: _appBarHeight),
+              margin: EdgeInsets.only(top: _appBarHeight + 15, bottom: 15),
               child: ScrollConfiguration(
                 behavior: RemoveGlow(),
                 child: mainView(),
@@ -191,7 +191,7 @@ class _SalahWidgetState extends State<SalahWidget> {
         animation: widget.animationController,
         builder: (BuildContext context, Widget child) {
           return Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+            padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
             child: Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).cardTheme.color,
@@ -214,57 +214,33 @@ class _SalahWidgetState extends State<SalahWidget> {
                 children: <Widget>[
                   Padding(
                     padding:
-                        const EdgeInsets.only(top: 16, left: 16, right: 24),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                        const EdgeInsets.only(left: 16, right: 16, top: 16),
+                    child: Row(
                       children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.calendar_today,
-                                      color: AppTheme.darkBlueGrey
-                                          .withOpacity(0.5),
-                                      size: 16,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 4.0),
-                                      child: Text(
-                                        widget.pray.results.datetime[index].date
-                                            .gregorian,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                          letterSpacing: 0.0,
-                                          color: Theme.of(context)
-                                              .textTheme
-                                              .caption
-                                              .color,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )
-                          ],
-                        )
+                        Icon(
+                          Icons.calendar_today,
+                          color: AppTheme.darkBlueGrey.withOpacity(0.5),
+                          size: 16,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4.0),
+                          child: Text(
+                            widget.pray.results.datetime[index].date.gregorian,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                              letterSpacing: 0.0,
+                              color: Theme.of(context).textTheme.caption.color,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                        left: 24, right: 24, top: 8, bottom: 8),
+                    padding:
+                        const EdgeInsets.only(left: 16, right: 16, top: 10),
                     child: Container(
                       height: 2,
                       decoration: const BoxDecoration(
@@ -275,7 +251,7 @@ class _SalahWidgetState extends State<SalahWidget> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
-                        left: 24, right: 24, top: 8, bottom: 16),
+                        left: 16, right: 16, top: 10, bottom: 10),
                     child: Row(
                       children: <Widget>[
                         _salahPerDate(TimesPrayBase.fajr,
@@ -304,7 +280,7 @@ class _SalahWidgetState extends State<SalahWidget> {
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(
             salah,

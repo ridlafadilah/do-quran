@@ -66,7 +66,7 @@ class SalahBloc extends Bloc<SalahEvent, SalahState> {
       await Geolocator.getCurrentPosition(
               desiredAccuracy: LocationAccuracy.medium,
               forceAndroidLocationManager: true,
-              timeLimit: const Duration(seconds: 15))
+              timeLimit: const Duration(seconds: 12))
           .then((value) async {
         List<Placemark> daftarPlace =
             await placemarkFromCoordinates(value.latitude, value.longitude);
