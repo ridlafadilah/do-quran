@@ -60,4 +60,22 @@ class ThemeService {
     await _sharedPreferences.putString('theme', settings.theme);
     return data;
   }
+
+  Future<bool> putDataSharedPreferences(bool data) async {
+    final String localeCode = _sharedPreferences.getString('locale');
+    SettingsDto settings;
+    if (data) {
+      settings = SettingsDto.fromJson({
+        'theme': ThemeType.darkTheme,
+        'localeCode': localeCode,
+      });
+    } else {
+      settings = SettingsDto.fromJson({
+        'theme': ThemeType.defaultTheme,
+        'localeCode': localeCode,
+      });
+    }
+    await _sharedPreferences.putString('theme', settings.theme);
+    return data;
+  }
 }

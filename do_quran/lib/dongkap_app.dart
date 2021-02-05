@@ -67,18 +67,22 @@ class _DongkapAppViewState extends State<DongkapAppView> {
   Widget build(BuildContext context) {
     return BlocBuilder<TranslationBloc, TranslationState>(
       builder: (BuildContext context, TranslationState state) {
-        return BlocBuilder<ThemeModeBloc, ThemeModeState>(
-          builder: (BuildContext context, ThemeModeState themeState) {
-            SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-              statusBarColor: Colors.transparent,
-              statusBarIconBrightness:
-                  themeState.darkMode ? Brightness.light : Brightness.dark,
-              statusBarBrightness:
-                  Platform.isAndroid ? Brightness.dark : Brightness.light,
-              systemNavigationBarColor: Colors.white,
-              systemNavigationBarDividerColor: Colors.grey,
-              systemNavigationBarIconBrightness: Brightness.dark,
-            ));
+        return BlocBuilder<ThemeModeBloc, ThemeState>(
+          builder: (BuildContext context, ThemeState themeState) {
+            ThemeMode themeMode = ThemeMode.system;
+            if (themeState is ThemeModeState) {
+              SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+                statusBarColor: Colors.transparent,
+                statusBarIconBrightness:
+                    themeState.darkMode ? Brightness.light : Brightness.dark,
+                statusBarBrightness:
+                    Platform.isAndroid ? Brightness.dark : Brightness.light,
+                systemNavigationBarColor: Colors.white,
+                systemNavigationBarDividerColor: Colors.grey,
+                systemNavigationBarIconBrightness: Brightness.dark,
+              ));
+              themeMode = themeState.themeMode;
+            }
             return MaterialApp(
               navigatorKey: _navigatorKey,
               title: 'Dongkap',
@@ -86,7 +90,7 @@ class _DongkapAppViewState extends State<DongkapAppView> {
                   GlobalConfiguration().getValue<bool>('debug'),
               theme: AppTheme.light,
               darkTheme: AppTheme.dark,
-              themeMode: themeState.themeMode,
+              themeMode: themeMode,
               localizationsDelegates: [
                 DongkapLocalizations.delegate,
                 GlobalMaterialLocalizations.delegate,

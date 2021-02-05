@@ -1,9 +1,11 @@
 import 'package:do_common/common.dart';
 import 'package:do_quran/generated/l10n.dart';
+import 'package:do_quran/l10n/utils/locale_utils.dart';
 import 'package:do_quran/quran/bloc/quran_bloc.dart';
 import 'package:do_quran/quran/widgets/quran_search_widget.dart';
 import 'package:do_quran/quran/widgets/quran_skeleton_widget.dart';
 import 'package:do_quran/quran/widgets/quran_widget.dart';
+import 'package:do_quran/theme/bloc/thememode_bloc.dart';
 import 'package:do_theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +23,7 @@ class _QuranPageState extends State<QuranPage> with TickerProviderStateMixin {
   List<Widget> listViews = <Widget>[];
   final ScrollController _scrollController = ScrollController();
   double _topBarOpacity = 0.0;
+  bool isDarkMode = false;
 
   @override
   void initState() {
@@ -46,6 +49,10 @@ class _QuranPageState extends State<QuranPage> with TickerProviderStateMixin {
         }
       }
     });
+    if (context.read<ThemeModeBloc>().state is ThemeModeState) {
+      ThemeModeState state = context.read<ThemeModeBloc>().state;
+      isDarkMode = state.darkMode;
+    }
 
     super.initState();
   }
@@ -75,9 +82,8 @@ class _QuranPageState extends State<QuranPage> with TickerProviderStateMixin {
                 alignment: Alignment.bottomRight,
                 child: FloatingActionButton(
                   heroTag: 'btnQuran',
-                  backgroundColor: Theme.of(context)
-                      .floatingActionButtonTheme
-                      .foregroundColor,
+                  backgroundColor: Colors.white,
+                  elevation: 6,
                   child: SvgPicture.asset(
                     'assets/eva_icons/fill/svg/book-open.svg',
                   ),
@@ -93,36 +99,63 @@ class _QuranPageState extends State<QuranPage> with TickerProviderStateMixin {
   }
 
   Widget mainView() {
-    return BlocProvider(
-      create: (context) {
-        return QuranBloc()..add(const RequestedEvent());
+    return BlocListener<ThemeModeBloc, ThemeState>(
+      listener: (context, state) {
+        if (state is SubmitInProgressState) {
+          _loading(context);
+        } else if (state is SubmitFailureState) {
+          Navigator.of(context, rootNavigator: true).pop();
+          Flushbar(
+            messageText: Text(
+              LocaleUtils.translate(LocaleUtils.translate(state.error)),
+              style: const TextStyle(color: Colors.white),
+            ),
+            icon: SvgPicture.asset(
+              'assets/eva_icons/outline/svg/alert-triangle-outline.svg',
+              color: AppTheme.lightColor,
+            ),
+            duration: const Duration(seconds: 3),
+            backgroundColor: AppTheme.lightDanger,
+            isDismissible: false,
+            dismissDirection: FlushbarDismissDirection.VERTICAL,
+          )..show(context);
+        } else if (state is SubmitSuccessState) {
+          context.read<ThemeModeBloc>().add(const ThemeModeEvent());
+          Navigator.of(context, rootNavigator: true).pop();
+          isDarkMode = state.data;
+        }
       },
-      child: BlocBuilder<QuranBloc, QuranState>(
-        builder: (BuildContext context, QuranState state) {
-          if (state is RequestSuccessState) {
-            return RefreshIndicator(
-              backgroundColor: Theme.of(context).dialogTheme.backgroundColor,
-              color: AppTheme.colorTheme,
-              strokeWidth: 3,
-              child: QuranWidget(
-                  scrollController: _scrollController,
-                  animationController: widget.animationController,
-                  quranInfo: state.quran),
-              onRefresh: () async {
-                context.read<QuranBloc>().add(const RequestedEvent());
-              },
-            );
-          } else if (state is RequestFailureState) {
-            return ConnectionErrorWidget(
-                error: DongkapLocalizations.of(context).ERR_LOAD_FILE,
-                retryButton: DongkapLocalizations.of(context).retry,
-                onPressed: () async {
-                  context.read<QuranBloc>().add(const RequestedEvent());
-                });
-          } else {
-            return QuranSkeletonWidget();
-          }
+      child: BlocProvider(
+        create: (context) {
+          return QuranBloc()..add(const RequestedEvent());
         },
+        child: BlocBuilder<QuranBloc, QuranState>(
+          builder: (BuildContext context, QuranState state) {
+            if (state is RequestSuccessState) {
+              return RefreshIndicator(
+                backgroundColor: Theme.of(context).dialogTheme.backgroundColor,
+                color: AppTheme.colorTheme,
+                strokeWidth: 3,
+                child: QuranWidget(
+                    scrollController: _scrollController,
+                    animationController: widget.animationController,
+                    quranInfo: state.quran),
+                onRefresh: () async {
+                  context.read<QuranBloc>().add(const RequestedEvent());
+                },
+              );
+            } else if (state is RequestFailureState) {
+              return ConnectionErrorWidget(
+                  error: DongkapLocalizations.of(context).ERR_LOAD_FILE,
+                  retryButton: DongkapLocalizations.of(context).retry,
+                  onPressed: () async {
+                    context.read<QuranBloc>().add(const RequestedEvent());
+                  });
+            } else {
+              return QuranSkeletonWidget();
+            }
+          },
+        ),
       ),
     );
   }
@@ -156,18 +189,20 @@ class _QuranPageState extends State<QuranPage> with TickerProviderStateMixin {
           child: SizedBox(
             height: 40,
             child: RollingSwitch(
-              value: true,
+              value: isDarkMode,
               colorIconOn: Colors.transparent,
               colorIconOff: Colors.transparent,
-              iconOn: SvgPicture.asset('assets/eva_icons/fill/svg/sun.svg',
-                  color: AppTheme.darkColor),
-              iconOff: SvgPicture.asset(
+              iconOn: SvgPicture.asset(
                 'assets/eva_icons/fill/svg/moon.svg',
                 color: AppTheme.lightColor,
               ),
+              iconOff: SvgPicture.asset('assets/eva_icons/fill/svg/sun.svg',
+                  color: const Color(0xFFFFD700)),
               textSize: 16.0,
-              onChanged: (bool state) {
-                print('$state');
+              onChanged: (bool darkMode) {
+                context
+                    .read<ThemeModeBloc>()
+                    .add(SubmittedEvent(data: darkMode));
               },
             ),
           ),
@@ -208,6 +243,19 @@ class _QuranPageState extends State<QuranPage> with TickerProviderStateMixin {
             descriptions:
                 DongkapLocalizations.of(context).promptSearchQuranDescription,
           ),
+        );
+      },
+    );
+  }
+
+  void _loading(BuildContext context) async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Container(
+          decoration: const BoxDecoration(color: Color.fromRGBO(0, 0, 0, 0)),
+          child: const Center(child: CircularProgressIndicator()),
         );
       },
     );
