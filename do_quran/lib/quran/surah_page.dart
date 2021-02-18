@@ -1,9 +1,7 @@
 import 'package:do_common/common.dart';
 import 'package:do_core/models.dart';
 import 'package:do_quran/generated/l10n.dart';
-import 'package:do_quran/l10n/utils/locale_utils.dart';
 import 'package:do_quran/quran/bloc/surah_bloc.dart';
-import 'package:do_quran/quran/widgets/quran_search_widget.dart';
 import 'package:do_quran/quran/widgets/surah_skeleton_widget.dart';
 import 'package:do_quran/quran/widgets/surah_widget.dart';
 import 'package:do_quran/theme/bloc/thememode_bloc.dart';
@@ -32,9 +30,16 @@ class _SurahPageState extends State<SurahPage> with TickerProviderStateMixin {
   final ItemPositionsListener itemPositionsListener =
       ItemPositionsListener.create();
   bool isDarkMode = false;
+  String surahName;
+  int surahIndex = 0;
+  int totalAyah = 0;
+  bool isPrevious = false;
 
   @override
   void initState() {
+    surahName = widget.quranInfo.latin;
+    surahIndex = widget.quranInfo.index;
+    totalAyah = widget.quranInfo.ayahCount;
     itemPositionsListener.itemPositions.addListener(() {
       ItemPosition position = itemPositionsListener.itemPositions.value
           .firstWhere((element) => element.index == 0, orElse: () => null);
@@ -60,6 +65,12 @@ class _SurahPageState extends State<SurahPage> with TickerProviderStateMixin {
               _topBarOpacity = 0.0;
             });
           }
+        }
+      } else {
+        if (_topBarOpacity != 1.0) {
+          setState(() {
+            _topBarOpacity = 1.0;
+          });
         }
       }
     });
@@ -88,85 +99,44 @@ class _SurahPageState extends State<SurahPage> with TickerProviderStateMixin {
             )
           ],
         ),
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.only(bottom: 70.0, right: 25.0),
-          child: Stack(
-            children: <Widget>[
-              Align(
-                alignment: Alignment.bottomRight,
-                child: FloatingActionButton(
-                  heroTag: 'btnQuran',
-                  backgroundColor: Theme.of(context)
-                      .floatingActionButtonTheme
-                      .foregroundColor,
-                  child: SvgPicture.asset(
-                    'assets/eva_icons/fill/svg/book.svg',
-                  ),
-                  onPressed: () {},
-                ),
-              ),
-            ],
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
   }
 
   Widget mainView() {
-    return BlocListener<ThemeModeBloc, ThemeState>(
-      listener: (context, state) {
-        if (state is SubmitInProgressState) {
-          _loading(context);
-        } else if (state is SubmitFailureState) {
-          Navigator.of(context, rootNavigator: true).pop();
-          Flushbar(
-            messageText: Text(
-              LocaleUtils.translate(LocaleUtils.translate(state.error)),
-              style: const TextStyle(color: Colors.white),
-            ),
-            icon: SvgPicture.asset(
-              'assets/eva_icons/outline/svg/alert-triangle-outline.svg',
-              color: AppTheme.lightColor,
-            ),
-            duration: const Duration(seconds: 3),
-            backgroundColor: AppTheme.lightDanger,
-            isDismissible: false,
-            dismissDirection: FlushbarDismissDirection.VERTICAL,
-          )..show(context);
-        } else if (state is SubmitSuccessState) {
-          context.read<ThemeModeBloc>().add(const ThemeModeEvent());
-          Navigator.of(context, rootNavigator: true).pop();
-          isDarkMode = state.data;
-        }
+    return BlocProvider(
+      create: (context) {
+        return SurahBloc()..add(RequestedEvent(numberOfSurah: surahIndex));
       },
-      child: BlocProvider(
-        create: (context) {
-          return SurahBloc()
-            ..add(RequestedEvent(numberOfSurah: widget.quranInfo.index));
-        },
-        child: BlocBuilder<SurahBloc, SurahState>(
-          builder: (BuildContext context, SurahState state) {
-            if (state is RequestSuccessState) {
-              return SurahWidget(
-                itemScrollController: itemScrollController,
-                itemPositionsListener: itemPositionsListener,
-                animationController: widget.animationController,
-                surah: state.surah,
-                ayat: widget.ayat,
-              );
-            } else if (state is RequestFailureState) {
-              return ConnectionErrorWidget(
-                  error: DongkapLocalizations.of(context).ERR_LOAD_FILE,
-                  retryButton: DongkapLocalizations.of(context).retry,
-                  onPressed: () async {
-                    context.read<SurahBloc>().add(const RequestedEvent());
-                  });
-            } else {
-              return SurahSkeletonWidget();
+      child: BlocBuilder<SurahBloc, SurahState>(
+        builder: (BuildContext context, SurahState state) {
+          if (state is RequestSuccessState) {
+            surahName = state.surah.nameLatin;
+            surahIndex = int.parse(state.surah.number);
+            totalAyah = int.parse(state.surah.numberOfAyah);
+            int posAyah = widget.ayat;
+            if (isPrevious) {
+              print(totalAyah);
+              posAyah = totalAyah;
             }
-          },
-        ),
+            return SurahWidget(
+              itemScrollController: itemScrollController,
+              itemPositionsListener: itemPositionsListener,
+              animationController: widget.animationController,
+              surah: state.surah,
+              ayat: posAyah,
+            );
+          } else if (state is RequestFailureState) {
+            return ConnectionErrorWidget(
+                error: DongkapLocalizations.of(context).ERR_LOAD_FILE,
+                retryButton: DongkapLocalizations.of(context).retry,
+                onPressed: () async {
+                  context.read<SurahBloc>().add(const RequestedEvent());
+                });
+          } else {
+            return SurahSkeletonWidget();
+          }
+        },
       ),
     );
   }
@@ -176,11 +146,31 @@ class _SurahPageState extends State<SurahPage> with TickerProviderStateMixin {
       animationController: widget.animationController,
       topBarOpacity: _topBarOpacity,
       children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: SizedBox(
+            height: 40,
+            width: 40,
+            child: InkWell(
+              highlightColor: AppTheme.darkBlueGrey.withOpacity(0.2),
+              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+              onTap: () {
+                Navigator.of(context).pop(true);
+              },
+              child: Center(
+                child: SvgPicture.asset(
+                  'assets/eva_icons/outline/svg/arrow-back-outline.svg',
+                  color: Theme.of(context).appBarTheme.iconTheme.color,
+                ),
+              ),
+            ),
+          ),
+        ),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              widget.quranInfo.latin,
+              surahName,
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 22 + 6 - 6 * _topBarOpacity,
@@ -195,80 +185,7 @@ class _SurahPageState extends State<SurahPage> with TickerProviderStateMixin {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: SizedBox(
-            height: 40,
-            child: RollingSwitch(
-              value: isDarkMode,
-              colorIconOn: Colors.transparent,
-              colorIconOff: Colors.transparent,
-              iconOn: SvgPicture.asset(
-                'assets/eva_icons/fill/svg/moon.svg',
-                color: AppTheme.lightColor,
-              ),
-              iconOff: SvgPicture.asset('assets/eva_icons/fill/svg/sun.svg',
-                  color: const Color(0xFFFFD700)),
-              textSize: 16.0,
-              onChanged: (bool darkMode) {
-                context
-                    .read<ThemeModeBloc>()
-                    .add(SubmittedEvent(data: darkMode));
-              },
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: SizedBox(
-            height: 40,
-            width: 40,
-            child: InkWell(
-              highlightColor: AppTheme.darkGrey.withOpacity(0.2),
-              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-              onTap: () {
-                _searchQuran(context);
-              },
-              child: Center(
-                child: SvgPicture.asset(
-                  'assets/eva_icons/outline/svg/search-outline.svg',
-                  color: Theme.of(context).iconTheme.color,
-                ),
-              ),
-            ),
-          ),
-        ),
       ],
-    );
-  }
-
-  void _searchQuran(BuildContext context) async {
-    await showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (_) {
-        return Center(
-          child: QuranSearchWidget(
-            animationController: widget.animationController,
-            title: DongkapLocalizations.of(context).promptSearchQuranTitle,
-            descriptions:
-                DongkapLocalizations.of(context).promptSearchQuranDescription,
-          ),
-        );
-      },
-    );
-  }
-
-  void _loading(BuildContext context) async {
-    await showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return Container(
-          decoration: const BoxDecoration(color: Color.fromRGBO(0, 0, 0, 0)),
-          child: const Center(child: CircularProgressIndicator()),
-        );
-      },
     );
   }
 }

@@ -69,19 +69,19 @@ class _BookmarksWidgetState extends State<BookmarksWidget> {
         isSelected = true;
         break;
       case 1:
-        txt = 'Ilmu Bermanfaat';
+        txt = 'Allah Menciptakan Manusia';
         break;
       case 2:
-        txt = 'Keakuan';
+        txt = 'Perintah Menundukan Dari Duniawi';
         break;
       case 3:
-        txt = 'Nafsu';
+        txt = 'Wujud Allah Meliputi Segalanya';
         break;
       case 4:
-        txt = 'Pengorbanan Diri';
+        txt = 'Wujud Kebesaran Ilmu Allah Pada Manusia';
         break;
       case 5:
-        txt = 'Syukur';
+        txt = 'Allah Meliputi Segala Sesuatu';
         break;
       default:
     }
