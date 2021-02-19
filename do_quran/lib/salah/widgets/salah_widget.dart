@@ -72,7 +72,7 @@ class _SalahWidgetState extends State<SalahWidget> {
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
                 pinned: true,
-                expandedHeight: 240,
+                expandedHeight: 260,
                 forceElevated: scrolling,
                 collapsedHeight: 65,
                 title: Align(
@@ -84,15 +84,17 @@ class _SalahWidgetState extends State<SalahWidget> {
                       children: [
                         Text(
                           widget.location,
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 16),
+                          style: TextStyle(
+                              color: Theme.of(context).appBarTheme.color,
+                              fontSize: 16),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 5.0),
                           child: Text(
                             DatetimeUtils.getTime('dd MMM yyyy'),
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 12),
+                            style: TextStyle(
+                                color: Theme.of(context).appBarTheme.color,
+                                fontSize: 12),
                           ),
                         )
                       ],
@@ -100,21 +102,25 @@ class _SalahWidgetState extends State<SalahWidget> {
                   ),
                 ),
                 actions: [
-                  IconButton(
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+                    child: IconButton(
                       icon: SvgPicture.asset(
                         'assets/icons/location.svg',
-                        color: Colors.white,
+                        color: Theme.of(context).appBarTheme.color,
                       ),
                       onPressed: () {
                         BlocProvider.of<SalahBloc>(context)
                             .add(const RequestedMonthEvent());
-                      }),
+                      },
+                    ),
+                  ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 15.0),
+                    padding: const EdgeInsets.fromLTRB(0.0, 15.0, 10.0, 0.0),
                     child: IconButton(
                         icon: SvgPicture.asset(
                           'assets/eva_icons/outline/svg/compass-outline.svg',
-                          color: Colors.white,
+                          color: Theme.of(context).appBarTheme.color,
                         ),
                         onPressed: () {
                           Navigator.of(context).push(
@@ -144,8 +150,8 @@ class _SalahWidgetState extends State<SalahWidget> {
                     background: Container(
                       padding: EdgeInsets.only(
                           top: _statusBarHeight + _appBarHeight + 16.0,
-                          left: 16.0,
-                          right: 16.0),
+                          left: 35.0,
+                          right: 35.0),
                       child: Column(
                         children: [
                           _salahToday(TimesPrayBase.fajr,
@@ -214,16 +220,16 @@ class _SalahWidgetState extends State<SalahWidget> {
                 children: <Widget>[
                   Padding(
                     padding:
-                        const EdgeInsets.only(left: 16, right: 16, top: 16),
+                        const EdgeInsets.only(left: 16, right: 16, top: 13),
                     child: Row(
                       children: <Widget>[
-                        Icon(
-                          Icons.calendar_today,
-                          color: AppTheme.darkBlueGrey.withOpacity(0.5),
-                          size: 16,
+                        SvgPicture.asset(
+                          'assets/eva_icons/outline/svg/calendar-outline.svg',
+                          color: Theme.of(context).iconTheme.color,
+                          height: 16,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 4.0),
+                          padding: const EdgeInsets.only(left: 10.0),
                           child: Text(
                             widget.pray.results.datetime[index].date.gregorian,
                             textAlign: TextAlign.center,
@@ -231,7 +237,8 @@ class _SalahWidgetState extends State<SalahWidget> {
                               fontWeight: FontWeight.w500,
                               fontSize: 14,
                               letterSpacing: 0.0,
-                              color: Theme.of(context).textTheme.caption.color,
+                              color:
+                                  Theme.of(context).textTheme.headline1.color,
                             ),
                           ),
                         ),
@@ -240,12 +247,13 @@ class _SalahWidgetState extends State<SalahWidget> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsets.only(left: 16, right: 16, top: 10),
+                        const EdgeInsets.only(left: 16, right: 16, top: 13),
                     child: Container(
-                      height: 2,
-                      decoration: const BoxDecoration(
-                        color: AppTheme.lightBlueGrey,
-                        borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                      height: 1,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).dividerTheme.color,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(4.0)),
                       ),
                     ),
                   ),
@@ -292,7 +300,7 @@ class _SalahWidgetState extends State<SalahWidget> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 6),
+            padding: const EdgeInsets.only(top: 6, bottom: 5),
             child: Text(
               timeSalah,
               textAlign: TextAlign.center,
@@ -309,25 +317,33 @@ class _SalahWidgetState extends State<SalahWidget> {
 
   _salahToday(String shalat, String time, bool status) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4.0),
+      margin: const EdgeInsets.symmetric(vertical: 6.0),
       child: Row(
         children: [
           Container(
             margin: const EdgeInsets.only(right: 16.0),
             child: Icon(
               Icons.access_time,
-              color: (status) ? Colors.white : Colors.white70,
+              color: (status)
+                  ? Theme.of(context).appBarTheme.color
+                  : Theme.of(context).appBarTheme.color.withOpacity(0.8),
               size: 16.0,
             ),
           ),
           Text(shalat,
               style: TextStyle(
-                  color: (status) ? Colors.white : Colors.white70,
+                  fontWeight: (status) ? FontWeight.w600 : FontWeight.normal,
+                  color: (status)
+                      ? Theme.of(context).appBarTheme.color
+                      : Theme.of(context).appBarTheme.color.withOpacity(0.8),
                   fontSize: 16.0)),
           const Spacer(),
           Text(time,
               style: TextStyle(
-                  color: (status) ? Colors.white : Colors.white70,
+                  fontWeight: (status) ? FontWeight.w600 : FontWeight.normal,
+                  color: (status)
+                      ? Theme.of(context).appBarTheme.color
+                      : Theme.of(context).appBarTheme.color.withOpacity(0.8),
                   fontSize: 16.0)),
         ],
       ),

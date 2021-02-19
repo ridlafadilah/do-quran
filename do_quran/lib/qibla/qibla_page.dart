@@ -108,7 +108,7 @@ class _QiblaPageState extends State<QiblaPage> with TickerProviderStateMixin {
       topBarOpacity: 0.0,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.all(5.0),
+          padding: const EdgeInsets.fromLTRB(0.0, 5.0, 5.0, 0.0),
           child: SizedBox(
             height: 40,
             width: 40,
@@ -129,12 +129,12 @@ class _QiblaPageState extends State<QiblaPage> with TickerProviderStateMixin {
         ),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.fromLTRB(5.0, 5.0, 0.0, 0.0),
             child: Text(
               DongkapLocalizations.of(context).qibla,
               textAlign: TextAlign.left,
               style: TextStyle(
-                fontSize: 22 + 6 - 6 * 0.0,
+                fontSize: 15 + 6 - 2 * 0.0,
                 color: Theme.of(context).appBarTheme.titleTextStyle.color,
                 fontFamily:
                     Theme.of(context).appBarTheme.titleTextStyle.fontFamily,

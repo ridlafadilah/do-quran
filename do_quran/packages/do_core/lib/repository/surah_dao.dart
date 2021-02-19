@@ -64,12 +64,16 @@ class SurahDao extends BaseDao<SurahEntity> {
     final db = await dbProvider.database;
     await db.insert(tableName, baseEntity.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace);
-    baseEntity.ayah.forEach((value) async {
-      await db.insert('ayah', value.toJson());
+    Batch batch = db.batch();
+    baseEntity.ayah.forEach((value) {
+      // await db.insert('ayah', value.toJson());
+      batch.insert('ayah', value.toJson());
     });
-    baseEntity.translations.forEach((value) async {
-      await db.insert('ayah_translation', value.toJson());
+    baseEntity.translations.forEach((value) {
+      // await db.insert('ayah_translation', value.toJson());
+      batch.insert('ayah_translation', value.toJson());
     });
+    await batch.commit(noResult: true);
   }
 
   Future<int> update(SurahEntity surah) async {

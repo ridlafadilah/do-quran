@@ -93,7 +93,7 @@ class _DongkapAppBarState extends State<DongkapAppBar> {
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
                                           fontSize:
-                                              22 + 6 - 6 * widget.topBarOpacity,
+                                              15 + 6 - 2 * widget.topBarOpacity,
                                           color: Theme.of(context)
                                               .appBarTheme
                                               .titleTextStyle

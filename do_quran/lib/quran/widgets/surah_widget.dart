@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:do_core/core.dart';
 import 'package:do_core/models.dart';
+import 'package:do_quran/quran/models/marker_ayah_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -13,7 +14,8 @@ class SurahWidget extends StatefulWidget {
       this.itemPositionsListener,
       this.animationController,
       @required this.surah,
-      this.ayat = 1})
+      this.ayat = 1,
+      this.onTapAyah})
       : super(key: key);
 
   final ItemScrollController itemScrollController;
@@ -21,6 +23,7 @@ class SurahWidget extends StatefulWidget {
   final AnimationController animationController;
   final Surah surah;
   final int ayat;
+  final void Function(List<MarkerAyah> marks) onTapAyah;
 
   @override
   _SurahWidgetState createState() => _SurahWidgetState();
@@ -29,6 +32,7 @@ class SurahWidget extends StatefulWidget {
 class _SurahWidgetState extends State<SurahWidget> {
   final String openingAyah = 'بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ';
   final bool isOpeningAyah = true;
+  List<MarkerAyah> marks = [];
 
   @override
   void initState() {
@@ -74,10 +78,12 @@ class _SurahWidgetState extends State<SurahWidget> {
                   openingAyah,
                   textAlign: TextAlign.end,
                   style: TextStyle(
-                    fontSize: 18.0,
+                    fontFamily: 'IsepMisbah',
+                    fontSize: 20.0,
                     color: Theme.of(context).textTheme.headline1.color,
                     fontWeight: FontWeight.normal,
-                    wordSpacing: 2.0,
+                    wordSpacing: 2.5,
+                    letterSpacing: 1.0,
                   ),
                 ),
               ),
@@ -93,7 +99,22 @@ class _SurahWidgetState extends State<SurahWidget> {
 
   Widget surahWidget({String key}) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        final int surahNumber = int.parse(widget.surah.number);
+        final int ayahNumber = int.parse(key);
+        MarkerAyah mark = marks.firstWhere(
+            (element) =>
+                element.surah == surahNumber && element.ayah == ayahNumber,
+            orElse: () => null);
+        if (mark == null) {
+          mark = MarkerAyah(surah: surahNumber, ayah: ayahNumber);
+          marks.add(mark);
+        } else {
+          marks.removeWhere((element) =>
+              element.surah == surahNumber && element.ayah == ayahNumber);
+        }
+        widget.onTapAyah(marks);
+      },
       child: Container(
         padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
         child: Column(
@@ -108,16 +129,19 @@ class _SurahWidgetState extends State<SurahWidget> {
                   TextSpan(
                     text: '${widget.surah.text[key]}',
                     style: TextStyle(
-                      fontSize: 18.0,
+                      fontFamily: 'IsepMisbah',
+                      fontSize: 20.0,
                       color: Theme.of(context).textTheme.headline1.color,
                       fontWeight: FontWeight.normal,
-                      wordSpacing: 2.0,
+                      wordSpacing: 2.5,
+                      letterSpacing: 1.0,
+                      height: 2.2,
                     ),
                   ),
                   WidgetSpan(
                     alignment: PlaceholderAlignment.middle,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
                       child: Stack(
                         children: <Widget>[
                           Container(
@@ -131,11 +155,12 @@ class _SurahWidgetState extends State<SurahWidget> {
                           Container(
                             width: 30,
                             padding:
-                                const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                                const EdgeInsets.fromLTRB(0.0, 9.0, 0.0, 9.0),
                             child: Text(
                               StringUtils.toFarsi(key),
                               textAlign: TextAlign.center,
                               style: TextStyle(
+                                fontFamily: 'IsepMisbah',
                                 fontSize: 16.0,
                                 color:
                                     Theme.of(context).textTheme.headline1.color,
@@ -152,14 +177,17 @@ class _SurahWidgetState extends State<SurahWidget> {
                 ],
               ),
             ),
-            Text(
-              '${widget.surah.translations.id.text[key]} ($key)',
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Theme.of(context).textTheme.bodyText1.color,
-                fontWeight: FontWeight.normal,
-                wordSpacing: 2.0,
-                height: 1.5,
+            Padding(
+              padding: const EdgeInsets.only(top: 5.0),
+              child: Text(
+                '${widget.surah.translations.id.text[key]} ($key)',
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Theme.of(context).textTheme.bodyText1.color,
+                  fontWeight: FontWeight.normal,
+                  wordSpacing: 2.0,
+                  height: 1.5,
+                ),
               ),
             ),
           ],

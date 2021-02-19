@@ -23,13 +23,13 @@ class _BookmarksWidgetState extends State<BookmarksWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(top: 8.0, left: 18, right: 16),
+          padding: const EdgeInsets.only(left: 18, right: 16),
           child: Text(
             DongkapLocalizations.of(context).category,
             textAlign: TextAlign.left,
             style: const TextStyle(
               fontWeight: FontWeight.w600,
-              fontSize: 22,
+              fontSize: 20,
               letterSpacing: 0.27,
             ),
           ),

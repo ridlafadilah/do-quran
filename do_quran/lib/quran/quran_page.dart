@@ -167,12 +167,12 @@ class _QuranPageState extends State<QuranPage> with TickerProviderStateMixin {
       children: <Widget>[
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.fromLTRB(5.0, 5.0, 0.0, 0.0),
             child: Text(
               DongkapLocalizations.of(context).alquran,
               textAlign: TextAlign.left,
               style: TextStyle(
-                fontSize: 22 + 6 - 6 * _topBarOpacity,
+                fontSize: 15 + 6 - 2 * _topBarOpacity,
                 color: Theme.of(context).appBarTheme.titleTextStyle.color,
                 fontFamily:
                     Theme.of(context).appBarTheme.titleTextStyle.fontFamily,
@@ -185,7 +185,7 @@ class _QuranPageState extends State<QuranPage> with TickerProviderStateMixin {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(5.0),
+          padding: const EdgeInsets.fromLTRB(0.0, 5.0, 5.0, 0.0),
           child: SizedBox(
             height: 40,
             child: RollingSwitch(
@@ -208,7 +208,7 @@ class _QuranPageState extends State<QuranPage> with TickerProviderStateMixin {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(5.0),
+          padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
           child: SizedBox(
             height: 40,
             width: 40,

@@ -64,7 +64,7 @@ class _QuranSearchWidgetState extends State<QuranSearchWidget> {
               left: 20.0, top: 20.0, right: 20.0, bottom: 30.0),
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
-            color: Colors.white,
+            color: Theme.of(context).dialogTheme.backgroundColor,
             borderRadius: BorderRadius.circular(20.0),
           ),
           child: Column(
@@ -103,7 +103,11 @@ class _QuranSearchWidgetState extends State<QuranSearchWidget> {
                         },
                         autofocus: true,
                         cursorColor: AppTheme.grey,
-                        style: const TextStyle(color: AppTheme.darkGrey),
+                        style: TextStyle(
+                            color: Theme.of(context)
+                                .dialogTheme
+                                .contentTextStyle
+                                .color),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 5.0, horizontal: 15.0),

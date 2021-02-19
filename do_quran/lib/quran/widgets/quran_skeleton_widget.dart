@@ -27,7 +27,7 @@ class _QuranSkeletonWidgetState extends State<QuranSkeletonWidget> {
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            margin: const EdgeInsets.all(16.0),
+            margin: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 32.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

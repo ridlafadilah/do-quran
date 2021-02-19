@@ -29,11 +29,11 @@ class _SurahPageState extends State<SurahPage> with TickerProviderStateMixin {
   final ItemScrollController itemScrollController = ItemScrollController();
   final ItemPositionsListener itemPositionsListener =
       ItemPositionsListener.create();
-  bool isDarkMode = false;
   String surahName;
   int surahIndex = 0;
   int totalAyah = 0;
-  bool isPrevious = false;
+  bool isPinnedAyah = false;
+  bool isLastAyah = false;
 
   @override
   void initState() {
@@ -74,11 +74,6 @@ class _SurahPageState extends State<SurahPage> with TickerProviderStateMixin {
         }
       }
     });
-    if (context.read<ThemeModeBloc>().state is ThemeModeState) {
-      ThemeModeState state = context.read<ThemeModeBloc>().state;
-      isDarkMode = state.darkMode;
-    }
-
     super.initState();
   }
 
@@ -115,16 +110,32 @@ class _SurahPageState extends State<SurahPage> with TickerProviderStateMixin {
             surahIndex = int.parse(state.surah.number);
             totalAyah = int.parse(state.surah.numberOfAyah);
             int posAyah = widget.ayat;
-            if (isPrevious) {
-              print(totalAyah);
-              posAyah = totalAyah;
-            }
             return SurahWidget(
               itemScrollController: itemScrollController,
               itemPositionsListener: itemPositionsListener,
               animationController: widget.animationController,
               surah: state.surah,
               ayat: posAyah,
+              onTapAyah: (marks) {
+                if (marks.isNotEmpty) {
+                  if (marks.length == 1) {
+                    setState(() {
+                      isLastAyah = true;
+                      isPinnedAyah = true;
+                    });
+                  } else {
+                    setState(() {
+                      isLastAyah = false;
+                      isPinnedAyah = true;
+                    });
+                  }
+                } else {
+                  setState(() {
+                    isLastAyah = false;
+                    isPinnedAyah = false;
+                  });
+                }
+              },
             );
           } else if (state is RequestFailureState) {
             return ConnectionErrorWidget(
@@ -147,7 +158,7 @@ class _SurahPageState extends State<SurahPage> with TickerProviderStateMixin {
       topBarOpacity: _topBarOpacity,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.all(5.0),
+          padding: const EdgeInsets.fromLTRB(0.0, 5.0, 5.0, 0.0),
           child: SizedBox(
             height: 40,
             width: 40,
@@ -168,12 +179,12 @@ class _SurahPageState extends State<SurahPage> with TickerProviderStateMixin {
         ),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.fromLTRB(5.0, 5.0, 0.0, 0.0),
             child: Text(
               surahName,
               textAlign: TextAlign.left,
               style: TextStyle(
-                fontSize: 22 + 6 - 6 * _topBarOpacity,
+                fontSize: 15 + 6 - 2 * _topBarOpacity,
                 color: Theme.of(context).appBarTheme.titleTextStyle.color,
                 fontFamily:
                     Theme.of(context).appBarTheme.titleTextStyle.fontFamily,
@@ -181,6 +192,74 @@ class _SurahPageState extends State<SurahPage> with TickerProviderStateMixin {
                     Theme.of(context).appBarTheme.titleTextStyle.fontWeight,
                 letterSpacing:
                     Theme.of(context).appBarTheme.titleTextStyle.letterSpacing,
+              ),
+            ),
+          ),
+        ),
+        Visibility(
+          visible: isLastAyah,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(0.0, 5.0, 5.0, 0.0),
+            child: SizedBox(
+              height: 40,
+              width: 40,
+              child: InkWell(
+                highlightColor: AppTheme.darkGrey.withOpacity(0.2),
+                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                onTap: () {},
+                child: Center(
+                  child: SvgPicture.asset(
+                    'assets/eva_icons/outline/svg/book-open-outline.svg',
+                    color: Theme.of(context).iconTheme.color,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Visibility(
+          visible: isPinnedAyah,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(0.0, 5.0, 5.0, 0.0),
+            child: SizedBox(
+              height: 40,
+              width: 40,
+              child: InkWell(
+                highlightColor: AppTheme.darkGrey.withOpacity(0.2),
+                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                onTap: () {},
+                child: Center(
+                  child: SvgPicture.asset(
+                    'assets/eva_icons/outline/svg/bookmark-outline.svg',
+                    color: Theme.of(context).iconTheme.color,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Visibility(
+          visible: isPinnedAyah,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
+            child: SizedBox(
+              height: 40,
+              width: 40,
+              child: InkWell(
+                highlightColor: AppTheme.darkGrey.withOpacity(0.2),
+                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                onTap: () {
+                  setState(() {
+                    isPinnedAyah = false;
+                    isLastAyah = false;
+                  });
+                },
+                child: Center(
+                  child: SvgPicture.asset(
+                    'assets/eva_icons/outline/svg/close-outline.svg',
+                    color: Theme.of(context).iconTheme.color,
+                  ),
+                ),
               ),
             ),
           ),

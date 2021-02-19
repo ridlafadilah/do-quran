@@ -49,7 +49,10 @@ class AppTheme {
     bottomSheetTheme: const BottomSheetThemeData(
       backgroundColor: lightModal,
     ),
-    dialogTheme: const DialogTheme(backgroundColor: lightColor),
+    dialogTheme: const DialogTheme(
+      backgroundColor: lightColor,
+      contentTextStyle: TextStyle(color: darkGrey),
+    ),
     dividerTheme: DividerThemeData(
       color: darkColor.withOpacity(0.1),
       thickness: 1.0,
@@ -157,7 +160,10 @@ class AppTheme {
     bottomSheetTheme: const BottomSheetThemeData(
       backgroundColor: darkAccent,
     ),
-    dialogTheme: const DialogTheme(backgroundColor: darkAccent),
+    dialogTheme: const DialogTheme(
+      backgroundColor: darkAccent,
+      contentTextStyle: TextStyle(color: lightGrey),
+    ),
     dividerTheme: DividerThemeData(
       color: lightColor.withOpacity(0.1),
       thickness: 1.0,

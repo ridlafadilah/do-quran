@@ -85,7 +85,10 @@ flutter:
           weight: 700
     - family: Roboto
       fonts:
-        - asset: assets/fonts/Roboto-Bold.ttf
-        - asset: assets/fonts/Roboto-Regular.ttf
         - asset: assets/fonts/Roboto-Medium.ttf
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Bold.ttf
           weight: 400
+    - family: IsepMisbah
+      fonts:
+        - asset: assets/fonts/IsepMisbah.ttf

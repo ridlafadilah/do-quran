@@ -42,7 +42,7 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
                 pinned: true,
-                expandedHeight: 240,
+                expandedHeight: 260,
                 forceElevated: scrolling,
                 collapsedHeight: 60,
                 title: Align(
@@ -52,16 +52,19 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          '',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        Text(
+                          '....',
+                          style: TextStyle(
+                              color: Theme.of(context).appBarTheme.color,
+                              fontSize: 16),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 5.0),
                           child: Text(
                             DatetimeUtils.getTime('dd MMM yyyy'),
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 12),
+                            style: TextStyle(
+                                color: Theme.of(context).appBarTheme.color,
+                                fontSize: 12),
                           ),
                         ),
                       ],
@@ -69,18 +72,21 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
                   ),
                 ),
                 actions: [
-                  IconButton(
-                      icon: SvgPicture.asset(
-                        'assets/icons/location.svg',
-                        color: Colors.white,
-                      ),
-                      onPressed: () {}),
                   Padding(
-                    padding: const EdgeInsets.only(right: 15.0),
+                    padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+                    child: IconButton(
+                        icon: SvgPicture.asset(
+                          'assets/icons/location.svg',
+                          color: Theme.of(context).appBarTheme.color,
+                        ),
+                        onPressed: () {}),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0.0, 15.0, 10.0, 0.0),
                     child: IconButton(
                         icon: SvgPicture.asset(
                           'assets/eva_icons/outline/svg/compass-outline.svg',
-                          color: Colors.white,
+                          color: Theme.of(context).appBarTheme.color,
                         ),
                         onPressed: () {
                           Navigator.of(context).push(
@@ -110,8 +116,8 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
                     background: Container(
                       padding: EdgeInsets.only(
                           top: _statusBarHeight + _appBarHeight + 16.0,
-                          left: 16.0,
-                          right: 16.0),
+                          left: 35.0,
+                          right: 35.0),
                       child: Column(
                         children: [
                           _salahToday(TimesPrayBase.fajr, '--:--', false),
@@ -169,16 +175,16 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
           child: Column(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 14),
                 child: Row(
                   children: <Widget>[
-                    Icon(
-                      Icons.calendar_today,
-                      color: AppTheme.darkBlueGrey.withOpacity(0.5),
-                      size: 16,
+                    SvgPicture.asset(
+                      'assets/eva_icons/outline/svg/calendar-outline.svg',
+                      color: Theme.of(context).iconTheme.color,
+                      height: 16,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 4.0, left: 4.0),
+                      padding: const EdgeInsets.only(left: 10.0, top: 2),
                       child: Shimmer.fromColors(
                         baseColor: Theme.of(context).colorScheme.primaryVariant,
                         highlightColor:
@@ -195,12 +201,12 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 14),
                 child: Container(
-                  height: 2,
-                  decoration: const BoxDecoration(
-                    color: AppTheme.lightBlueGrey,
-                    borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                  height: 1,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).dividerTheme.color,
+                    borderRadius: const BorderRadius.all(Radius.circular(4.0)),
                   ),
                 ),
               ),
@@ -244,7 +250,7 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 10.0),
+            padding: const EdgeInsets.only(top: 10.0, bottom: 5),
             child: Shimmer.fromColors(
               baseColor: Theme.of(context).colorScheme.primaryVariant,
               highlightColor: Theme.of(context).colorScheme.secondaryVariant,
@@ -263,25 +269,31 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
 
   _salahToday(String shalat, String time, bool status) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4.0),
+      margin: const EdgeInsets.symmetric(vertical: 6.0),
       child: Row(
         children: [
           Container(
             margin: const EdgeInsets.only(right: 16.0),
             child: Icon(
               Icons.access_time,
-              color: (status) ? Colors.white : Colors.white70,
+              color: (status)
+                  ? Theme.of(context).appBarTheme.color
+                  : Theme.of(context).appBarTheme.color.withOpacity(0.8),
               size: 16.0,
             ),
           ),
           Text(shalat,
               style: TextStyle(
-                  color: (status) ? Colors.white : Colors.white70,
+                  color: (status)
+                      ? Theme.of(context).appBarTheme.color
+                      : Theme.of(context).appBarTheme.color.withOpacity(0.8),
                   fontSize: 16.0)),
           const Spacer(),
           Text(time,
               style: TextStyle(
-                  color: (status) ? Colors.white : Colors.white70,
+                  color: (status)
+                      ? Theme.of(context).appBarTheme.color
+                      : Theme.of(context).appBarTheme.color.withOpacity(0.8),
                   fontSize: 16.0)),
         ],
       ),
