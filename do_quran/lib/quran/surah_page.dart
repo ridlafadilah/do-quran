@@ -34,6 +34,7 @@ class _SurahPageState extends State<SurahPage> with TickerProviderStateMixin {
   int totalAyah = 0;
   bool isPinnedAyah = false;
   bool isLastAyah = false;
+  bool clearAll = false;
 
   @override
   void initState() {
@@ -116,6 +117,7 @@ class _SurahPageState extends State<SurahPage> with TickerProviderStateMixin {
               animationController: widget.animationController,
               surah: state.surah,
               ayat: posAyah,
+              clearAll: clearAll,
               onTapAyah: (marks) {
                 if (marks.isNotEmpty) {
                   if (marks.length == 1) {
@@ -196,68 +198,81 @@ class _SurahPageState extends State<SurahPage> with TickerProviderStateMixin {
             ),
           ),
         ),
-        Visibility(
-          visible: isLastAyah,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0.0, 5.0, 5.0, 0.0),
-            child: SizedBox(
-              height: 40,
-              width: 40,
-              child: InkWell(
-                highlightColor: AppTheme.darkGrey.withOpacity(0.2),
-                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                onTap: () {},
-                child: Center(
-                  child: SvgPicture.asset(
-                    'assets/eva_icons/outline/svg/book-open-outline.svg',
-                    color: Theme.of(context).iconTheme.color,
+        AnimatedOpacity(
+          opacity: isLastAyah ? 1 : 0,
+          duration: const Duration(milliseconds: 500),
+          child: Visibility(
+            visible: isLastAyah,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 5.0, 5.0, 0.0),
+              child: SizedBox(
+                height: 40,
+                width: 40,
+                child: InkWell(
+                  highlightColor: AppTheme.darkGrey.withOpacity(0.2),
+                  borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                  onTap: () {},
+                  child: Center(
+                    child: SvgPicture.asset(
+                      'assets/eva_icons/outline/svg/book-open-outline.svg',
+                      color: Theme.of(context).iconTheme.color,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
         ),
-        Visibility(
-          visible: isPinnedAyah,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0.0, 5.0, 5.0, 0.0),
-            child: SizedBox(
-              height: 40,
-              width: 40,
-              child: InkWell(
-                highlightColor: AppTheme.darkGrey.withOpacity(0.2),
-                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                onTap: () {},
-                child: Center(
-                  child: SvgPicture.asset(
-                    'assets/eva_icons/outline/svg/bookmark-outline.svg',
-                    color: Theme.of(context).iconTheme.color,
+        AnimatedOpacity(
+          opacity: isPinnedAyah ? 1 : 0,
+          duration: const Duration(milliseconds: 500),
+          child: Visibility(
+            visible: isPinnedAyah,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 5.0, 5.0, 0.0),
+              child: SizedBox(
+                height: 40,
+                width: 40,
+                child: InkWell(
+                  highlightColor: AppTheme.darkGrey.withOpacity(0.2),
+                  borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                  onTap: () {},
+                  child: Center(
+                    child: SvgPicture.asset(
+                      'assets/eva_icons/outline/svg/bookmark-outline.svg',
+                      color: Theme.of(context).iconTheme.color,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
         ),
-        Visibility(
-          visible: isPinnedAyah,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-            child: SizedBox(
-              height: 40,
-              width: 40,
-              child: InkWell(
-                highlightColor: AppTheme.darkGrey.withOpacity(0.2),
-                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                onTap: () {
-                  setState(() {
-                    isPinnedAyah = false;
-                    isLastAyah = false;
-                  });
-                },
-                child: Center(
-                  child: SvgPicture.asset(
-                    'assets/eva_icons/outline/svg/close-outline.svg',
-                    color: Theme.of(context).iconTheme.color,
+        AnimatedOpacity(
+          opacity: isPinnedAyah ? 1 : 0,
+          duration: const Duration(milliseconds: 500),
+          child: Visibility(
+            visible: isPinnedAyah,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
+              child: SizedBox(
+                height: 40,
+                width: 40,
+                child: InkWell(
+                  highlightColor: AppTheme.darkGrey.withOpacity(0.2),
+                  borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                  onTap: () {
+                    setState(() {
+                      isPinnedAyah = false;
+                      isLastAyah = false;
+                      clearAll = true;
+                    });
+                  },
+                  child: Center(
+                    child: SvgPicture.asset(
+                      'assets/eva_icons/outline/svg/close-outline.svg',
+                      color: Theme.of(context).iconTheme.color,
+                    ),
                   ),
                 ),
               ),

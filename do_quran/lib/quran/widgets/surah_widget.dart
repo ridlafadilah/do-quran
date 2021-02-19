@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:do_core/core.dart';
 import 'package:do_core/models.dart';
 import 'package:do_quran/quran/models/marker_ayah_model.dart';
+import 'package:do_theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -15,6 +16,7 @@ class SurahWidget extends StatefulWidget {
       this.animationController,
       @required this.surah,
       this.ayat = 1,
+      this.clearAll,
       this.onTapAyah})
       : super(key: key);
 
@@ -23,6 +25,7 @@ class SurahWidget extends StatefulWidget {
   final AnimationController animationController;
   final Surah surah;
   final int ayat;
+  final bool clearAll;
   final void Function(List<MarkerAyah> marks) onTapAyah;
 
   @override
@@ -33,10 +36,16 @@ class _SurahWidgetState extends State<SurahWidget> {
   final String openingAyah = 'بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ';
   final bool isOpeningAyah = true;
   List<MarkerAyah> marks = [];
+  MarkerAyah mark = MarkerAyah();
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.clearAll) {
+        setState(() {
+          marks = [];
+        });
+      }
       if (widget.itemScrollController.isAttached) {
         if (widget.ayat > 5) {
           widget.itemScrollController.scrollTo(
@@ -102,7 +111,7 @@ class _SurahWidgetState extends State<SurahWidget> {
       onTap: () {
         final int surahNumber = int.parse(widget.surah.number);
         final int ayahNumber = int.parse(key);
-        MarkerAyah mark = marks.firstWhere(
+        mark = marks.firstWhere(
             (element) =>
                 element.surah == surahNumber && element.ayah == ayahNumber,
             orElse: () => null);
@@ -117,6 +126,9 @@ class _SurahWidgetState extends State<SurahWidget> {
       },
       child: Container(
         padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+        color: (marks.any((element) => element.ayah == int.parse(key)))
+            ? Theme.of(context).hintColor
+            : Colors.transparent,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

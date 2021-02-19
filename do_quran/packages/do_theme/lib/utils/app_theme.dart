@@ -30,6 +30,7 @@ class AppTheme {
     platform: TargetPlatform.iOS,
     primaryColor: colorTheme,
     backgroundColor: lightColor,
+    hintColor: lightGrey,
     appBarTheme: const AppBarTheme(
       color: lightColor,
       titleTextStyle: titleTextStyle,
@@ -141,6 +142,7 @@ class AppTheme {
     primaryColor: colorTheme,
     scaffoldBackgroundColor: darkColor,
     backgroundColor: darkColor,
+    hintColor: darkGrey,
     appBarTheme: const AppBarTheme(
       color: darkColor,
       titleTextStyle: titleTextStyleDark,
