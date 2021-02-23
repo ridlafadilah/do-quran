@@ -45,8 +45,8 @@ class DBHelper {
       ')';
   static final String ayahBookmarksTable = 'CREATE TABLE ayah_bookmarks ('
       'id INTEGER PRIMARY KEY AUTOINCREMENT, '
-      'number_of_surah INTEGER, '
-      'number_of_ayah INTEGER, '
+      'surah INTEGER, '
+      'ayah INTEGER, '
       'notes TEXT, '
       'id_category INTEGER, '
       'FOREIGN KEY (id_category) REFERENCES category_bookmarks (id) '

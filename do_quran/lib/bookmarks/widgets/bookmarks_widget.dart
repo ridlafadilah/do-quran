@@ -91,7 +91,13 @@ class _BookmarksWidgetState extends State<BookmarksWidget> {
           height: 16,
         ),
         Flexible(
-          child: BookmarksListViewWidget(),
+          child: RefreshIndicator(
+            backgroundColor: Theme.of(context).dialogTheme.backgroundColor,
+            color: AppTheme.colorTheme,
+            strokeWidth: 3,
+            child: BookmarksListViewWidget(),
+            onRefresh: () async {},
+          ),
         ),
       ],
     );

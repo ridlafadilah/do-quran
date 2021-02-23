@@ -1,4 +1,3 @@
-import 'package:do_theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -19,7 +18,6 @@ class _BookmarksListViewWidgetState extends State<BookmarksListViewWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.only(
           bottom: 15 + MediaQuery.of(context).padding.bottom,

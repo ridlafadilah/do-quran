@@ -53,15 +53,7 @@ class _BookmarksPageState extends State<BookmarksPage>
       },
       child: BlocBuilder<BookmarksBloc, BookmarksState>(
         builder: (BuildContext context, BookmarksState state) {
-          return RefreshIndicator(
-            backgroundColor: Theme.of(context).dialogTheme.backgroundColor,
-            color: AppTheme.colorTheme,
-            strokeWidth: 3,
-            child: BookmarksWidget(),
-            onRefresh: () async {
-              context.read<BookmarksBloc>().add(const RequestedMonthEvent());
-            },
-          );
+          return BookmarksWidget();
         },
       ),
     );

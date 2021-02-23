@@ -1,19 +1,11 @@
-import 'package:do_core/core.dart';
-import 'package:do_core/models.dart';
-import 'package:do_quran/helper/remove_glow.dart';
-import 'package:do_quran/qibla/qibla_page.dart';
+import 'package:do_quran/generated/l10n.dart';
 import 'package:do_theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
 
 class BookmarksSkeletonWidget extends StatefulWidget {
-  BookmarksSkeletonWidget(
-      {Key key, this.scrollController, this.animationController})
-      : super(key: key);
-
-  final ScrollController scrollController;
-  final AnimationController animationController;
+  BookmarksSkeletonWidget({Key key}) : super(key: key);
 
   @override
   _BookmarksSkeletonWidgetState createState() =>
@@ -21,186 +13,138 @@ class BookmarksSkeletonWidget extends StatefulWidget {
 }
 
 class _BookmarksSkeletonWidgetState extends State<BookmarksSkeletonWidget> {
-  double _statusBarHeight = 0.0;
-  double _appBarHeight = 0.0;
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  final int itemCount = 9;
+  final double heightLeading = 40.0;
+  final double widthLeading = 90.0;
+  final double heightTitle = 14.0;
+  final double widthTitle = 100.0;
+  final double heightSubtitle = 12.0;
+  final double widthSubtitle = 200.0;
+  final EdgeInsets marginTitle = const EdgeInsets.only(bottom: 7.0);
 
   @override
   Widget build(BuildContext context) {
-    _statusBarHeight = MediaQuery.of(context).padding.top;
-    _appBarHeight = AppBar().preferredSize.height;
-    return Scaffold(
-      body: NestedScrollView(
-        headerSliverBuilder: (context, scrolling) {
-          return <Widget>[
-            SliverOverlapAbsorber(
-              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-              sliver: SliverAppBar(
-                backgroundColor: Colors.transparent,
-                shadowColor: Colors.transparent,
-                pinned: true,
-                expandedHeight: 240,
-                forceElevated: scrolling,
-                collapsedHeight: 60,
-                title: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0, top: 15.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          '',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5.0),
-                          child: Text(
-                            DatetimeUtils.getTime('dd MMM yyyy'),
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 12),
-                          ),
-                        ),
-                      ],
-                    ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 16, right: 16),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  DongkapLocalizations.of(context).category,
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
+                    letterSpacing: 0.27,
                   ),
                 ),
-                actions: [
-                  IconButton(
-                      icon: SvgPicture.asset(
-                        'assets/icons/location.svg',
-                        color: Colors.white,
-                      ),
-                      onPressed: () {}),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 15.0),
-                    child: IconButton(
-                        icon: SvgPicture.asset(
-                          'assets/eva_icons/outline/svg/compass-outline.svg',
-                          color: Colors.white,
+              ),
+              InkWell(
+                highlightColor: Colors.transparent,
+                borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        DongkapLocalizations.of(context).others,
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 16,
+                          letterSpacing: 0.5,
+                          color: AppTheme.colorTheme,
                         ),
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute<dynamic>(
-                              builder: (BuildContext context) => QiblaPage(
-                                  animationController:
-                                      widget.animationController),
-                            ),
-                          );
-                        }),
+                      ),
+                      SizedBox(
+                        height: 38,
+                        width: 26,
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: Theme.of(context).iconTheme.color,
+                          size: 18,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-                flexibleSpace: Container(
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF21A7FF),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(32.0),
-                    ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Container(
+          height: 45,
+          width: double.infinity,
+          child: ListView.builder(
+              shrinkWrap: true,
+              padding:
+                  const EdgeInsets.only(top: 0, bottom: 0, right: 16, left: 16),
+              itemCount: 6,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (BuildContext context, int index) {
+                return getButtonCategory(index);
+              }),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Flexible(
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: itemCount,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardTheme.color,
+                    borderRadius: BorderRadius.circular(8.0),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                          color: Color(0xFF21A7FF),
-                          offset: Offset(0.1, 0.1),
+                          color: Theme.of(context)
+                              .cardTheme
+                              .shadowColor
+                              .withOpacity(0.2),
+                          offset: const Offset(1.1, 1.1),
                           blurRadius: 10.0),
                     ],
                   ),
-                  child: FlexibleSpaceBar(
-                    background: Container(
-                      padding: EdgeInsets.only(
-                          top: _statusBarHeight + _appBarHeight + 16.0,
-                          left: 16.0,
-                          right: 16.0),
-                      child: Column(
-                        children: [
-                          _salahToday(TimesPrayBase.fajr, '--:--', false),
-                          _salahToday(TimesPrayBase.dhuhr, '--:--', false),
-                          _salahToday(TimesPrayBase.asr, '--:--', false),
-                          _salahToday(TimesPrayBase.maghrib, '--:--', false),
-                          _salahToday(TimesPrayBase.isha, '--:--', false),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            )
-          ];
-        },
-        body: Stack(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top: _appBarHeight - 5),
-              child: ScrollConfiguration(
-                behavior: RemoveGlow(),
-                child: mainView(),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget mainView() {
-    return ListView.builder(
-      physics: const BouncingScrollPhysics(),
-      scrollDirection: Axis.vertical,
-      itemCount: 15,
-      itemBuilder: (context, index) => Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardTheme.color,
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(8.0),
-                bottomLeft: Radius.circular(8.0),
-                bottomRight: Radius.circular(8.0),
-                topRight: Radius.circular(40.0)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                  color:
-                      Theme.of(context).cardTheme.shadowColor.withOpacity(0.2),
-                  offset: const Offset(1.1, 1.1),
-                  blurRadius: 10.0),
-            ],
-          ),
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 16, left: 16, right: 24),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                  child: Material(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Theme.of(context).cardTheme.color,
+                    child: Container(
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(top: 18, left: 16, right: 16),
+                        child: Column(
                           children: <Widget>[
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                Icon(
-                                  Icons.calendar_today,
-                                  color: AppTheme.darkBlueGrey.withOpacity(0.5),
-                                  size: 16,
+                                SvgPicture.asset(
+                                  'assets/eva_icons/outline/svg/book-outline.svg',
+                                  color: Theme.of(context)
+                                      .iconTheme
+                                      .color
+                                      .withOpacity(0.7),
+                                  height: 16,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 4.0, left: 4.0),
-                                  child: Shimmer.fromColors(
-                                    baseColor: Theme.of(context)
-                                        .colorScheme
-                                        .primaryVariant,
-                                    highlightColor: Theme.of(context)
-                                        .colorScheme
-                                        .secondaryVariant,
+                                Shimmer.fromColors(
+                                  baseColor: Theme.of(context)
+                                      .colorScheme
+                                      .primaryVariant,
+                                  highlightColor: Theme.of(context)
+                                      .colorScheme
+                                      .secondaryVariant,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 4.0),
                                     child: Container(
                                       color: Colors.white,
                                       width: 100.0,
@@ -211,104 +155,132 @@ class _BookmarksSkeletonWidgetState extends State<BookmarksSkeletonWidget> {
                                 ),
                               ],
                             ),
+                            Shimmer.fromColors(
+                              baseColor:
+                                  Theme.of(context).colorScheme.primaryVariant,
+                              highlightColor: Theme.of(context)
+                                  .colorScheme
+                                  .secondaryVariant,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 15.0, left: 20.0),
+                                child: Container(
+                                  color: Colors.white,
+                                  width: 350.0,
+                                  height: 15.0,
+                                  child: const Text(''),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 10, bottom: 6),
+                              child: Container(
+                                height: 1,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).dividerTheme.color,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(4.0)),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 5.0, bottom: 12.0),
+                              child: Row(
+                                children: <Widget>[
+                                  SvgPicture.asset(
+                                    'assets/eva_icons/outline/svg/file-text-outline.svg',
+                                    color: Theme.of(context)
+                                        .iconTheme
+                                        .color
+                                        .withOpacity(0.7),
+                                    height: 16,
+                                  ),
+                                  Flexible(
+                                    fit: FlexFit.loose,
+                                    child: Shimmer.fromColors(
+                                      baseColor: Theme.of(context)
+                                          .colorScheme
+                                          .primaryVariant,
+                                      highlightColor: Theme.of(context)
+                                          .colorScheme
+                                          .secondaryVariant,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 4.0),
+                                        child: Container(
+                                          color: Colors.white,
+                                          width: 250.0,
+                                          height: 15.0,
+                                          child: const Text(''),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 24, right: 24, top: 8, bottom: 8),
-                child: Container(
-                  height: 2,
-                  decoration: const BoxDecoration(
-                    color: AppTheme.lightBlueGrey,
-                    borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 24, right: 24, top: 8, bottom: 16),
-                child: Row(
-                  children: <Widget>[
-                    _salahPerDate(),
-                    _salahPerDate(),
-                    _salahPerDate(),
-                    _salahPerDate(),
-                    _salahPerDate(),
-                  ],
-                ),
-              )
-            ],
+              );
+            },
           ),
         ),
-      ),
+      ],
     );
   }
 
-  _salahPerDate() {
-    return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 4.0),
-            child: Shimmer.fromColors(
-              baseColor: Theme.of(context).colorScheme.primaryVariant,
-              highlightColor: Theme.of(context).colorScheme.secondaryVariant,
-              child: Container(
-                color: Colors.white,
-                width: 50.0,
-                height: 15.0,
-                child: const Text(''),
+  Widget getButtonCategory(int index) {
+    String txt = '';
+    bool isSelected = false;
+    switch (index) {
+      case 0:
+        txt = 'All';
+        isSelected = true;
+        break;
+      default:
+    }
+    return Shimmer.fromColors(
+      baseColor: Theme.of(context).colorScheme.primaryVariant,
+      highlightColor: Theme.of(context).colorScheme.secondaryVariant,
+      child: Container(
+        margin: const EdgeInsets.only(right: 5.0),
+        width: isSelected ? null : 130,
+        decoration: BoxDecoration(
+            color: isSelected
+                ? AppTheme.colorTheme
+                : Theme.of(context).buttonTheme.colorScheme,
+            borderRadius: const BorderRadius.all(Radius.circular(24.0)),
+            border: Border.all(color: AppTheme.colorTheme)),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            splashColor: AppTheme.colorTheme,
+            borderRadius: const BorderRadius.all(Radius.circular(24.0)),
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 12, bottom: 12, left: 18, right: 18),
+              child: Text(
+                txt,
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12,
+                  letterSpacing: 0.27,
+                  color: isSelected
+                      ? Theme.of(context).colorScheme.onPrimary
+                      : AppTheme.colorTheme,
+                ),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Shimmer.fromColors(
-              baseColor: Theme.of(context).colorScheme.primaryVariant,
-              highlightColor: Theme.of(context).colorScheme.secondaryVariant,
-              child: Container(
-                color: Colors.white,
-                width: 50.0,
-                height: 15.0,
-                child: const Text(''),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  _salahToday(String shalat, String time, bool status) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(right: 16.0),
-            child: Icon(
-              Icons.access_time,
-              color: (status) ? Colors.white : Colors.white70,
-              size: 16.0,
-            ),
-          ),
-          Text(shalat,
-              style: TextStyle(
-                  color: (status) ? Colors.white : Colors.white70,
-                  fontSize: 16.0)),
-          const Spacer(),
-          Text(time,
-              style: TextStyle(
-                  color: (status) ? Colors.white : Colors.white70,
-                  fontSize: 16.0)),
-        ],
+        ),
       ),
     );
   }

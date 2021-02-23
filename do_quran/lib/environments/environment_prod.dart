@@ -14,6 +14,9 @@ class EnvironmentProduction extends Environment {
           'quran': {
             'host': 'https://ridlafadilah.github.io',
           },
+          'bookmarks': {
+            'host': 'https://ridlafadilah.github.io',
+          },
           'openapi': {
             'host': 'https://dongkap-api.herokuapp.com',
           },

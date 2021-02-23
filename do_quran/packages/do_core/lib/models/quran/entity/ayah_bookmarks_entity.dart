@@ -7,9 +7,9 @@ part 'ayah_bookmarks_entity.g.dart';
 class AyahBookmarksEntity extends BaseEntity {
   AyahBookmarksEntity({
     this.id,
-    this.numberOfSurah,
-    this.numberOfAyah,
-    this.description,
+    this.surah,
+    this.ayah,
+    this.notes,
     this.idCategory,
   });
 
@@ -20,17 +20,15 @@ class AyahBookmarksEntity extends BaseEntity {
   Map<String, dynamic> toJson() => _$AyahBookmarksEntityToJson(this);
 
   int id;
-  @JsonKey(name: 'number_of_surah')
-  int numberOfSurah;
-  @JsonKey(name: 'number_of_ayah')
-  int numberOfAyah;
-  String description;
+  int surah;
+  int ayah;
+  String notes;
   @JsonKey(name: 'id_category')
   int idCategory;
 
   @override
   String toString() {
     return '''
-AyahBookmarksEntity : {${'id: $id, '}${'numberOfSurah: $numberOfSurah, '}${'numberOfAyah: $numberOfAyah, '}${'description: $description '}}''';
+AyahBookmarksEntity : {${'id: $id, '}${'surah: $surah, '}${'ayah: $ayah, '}${'notes: $notes '}}''';
   }
 }

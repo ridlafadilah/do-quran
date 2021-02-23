@@ -10,6 +10,9 @@ class Environment {
           'quran': {
             'host': 'https://ridlafadilah.github.io',
           },
+          'bookmarks': {
+            'host': 'https://ridlafadilah.github.io',
+          },
           'openapi': {
             'host': 'http://192.168.1.100:8085',
           },
