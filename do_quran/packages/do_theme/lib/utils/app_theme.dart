@@ -135,6 +135,7 @@ class AppTheme {
       bodyText2: body2,
       caption: caption,
     ),
+    textSelectionTheme: const TextSelectionThemeData(selectionColor: lightText),
   );
 
   static final ThemeData dark = ThemeData(
@@ -247,6 +248,7 @@ class AppTheme {
       bodyText2: body2Dark,
       caption: captionDark,
     ),
+    textSelectionTheme: const TextSelectionThemeData(selectionColor: darkText),
   );
 
   // Light Text

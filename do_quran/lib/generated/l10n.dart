@@ -545,6 +545,16 @@ class DongkapLocalizations {
     );
   }
 
+  /// `Others`
+  String get others {
+    return Intl.message(
+      'Others',
+      name: 'others',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Username / Email`
   String get hintUsernameEmail {
     return Intl.message(

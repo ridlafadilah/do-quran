@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -7,13 +9,12 @@ class SurahSkeletonWidget extends StatefulWidget {
 }
 
 class _SurahSkeletonWidgetState extends State<SurahSkeletonWidget> {
+  final Random random = Random();
   final int itemCount = 9;
   final double heightLeading = 40.0;
   final double widthLeading = 90.0;
-  final double heightTitle = 14.0;
-  final double widthTitle = 100.0;
-  final double heightSubtitle = 12.0;
-  final double widthSubtitle = 200.0;
+  final double heightTitle = 22.0;
+  final double heightSubtitle = 22.0;
   final EdgeInsets marginTitle = const EdgeInsets.only(bottom: 7.0);
 
   @override
@@ -26,10 +27,14 @@ class _SurahSkeletonWidgetState extends State<SurahSkeletonWidget> {
         itemCount: itemCount,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
+          double widthTitle =
+              double.parse('${(random.nextInt(10) * 10) + 200}');
+          double widthSubtitle =
+              double.parse('${(random.nextInt(10) * 10) + 200}');
           return Container(
             margin: const EdgeInsets.all(16.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -43,15 +48,10 @@ class _SurahSkeletonWidgetState extends State<SurahSkeletonWidget> {
                     ),
                     Container(
                       width: widthSubtitle,
-                      height: 14,
+                      height: heightSubtitle,
                       color: Colors.white,
                     ),
                   ],
-                ),
-                Container(
-                  width: widthLeading,
-                  height: heightLeading,
-                  decoration: const BoxDecoration(color: Colors.white),
                 ),
               ],
             ),

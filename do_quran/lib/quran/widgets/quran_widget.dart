@@ -36,7 +36,8 @@ class _QuranWidgetState extends State<QuranWidget> {
       itemCount: widget.quranInfo.length,
       scrollDirection: Axis.vertical,
       itemBuilder: (BuildContext context, int index) {
-        return InkWell(
+        return ListTile(
+          dense: true,
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute<dynamic>(
@@ -47,43 +48,29 @@ class _QuranWidgetState extends State<QuranWidget> {
               ),
             );
           },
-          child: Container(
-            margin: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 32.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.quranInfo[index].latin,
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Theme.of(context).textTheme.headline1.color,
-                        fontWeight: FontWeight.normal,
-                      ),
-                      maxLines: 1,
-                    ),
-                    Text(
-                      '''
-${index + 1}. ${widget.quranInfo[index].translationIndonesia} | ${widget.quranInfo[index].ayahCount} ayat''',
-                      style: const TextStyle(
-                        fontSize: 12.0,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.normal,
-                      ),
-                      maxLines: 2,
-                    )
-                  ],
-                ),
-                const Spacer(),
-                SvgPicture.asset(
-                  Assets.imagesSurah[index],
-                  height: 32.0,
-                  color: Theme.of(context).iconTheme.color,
-                )
-              ],
+          title: Text(
+            widget.quranInfo[index].latin,
+            style: TextStyle(
+              fontSize: 16.0,
+              color: Theme.of(context).textTheme.headline1.color,
+              fontWeight: FontWeight.normal,
             ),
+            maxLines: 1,
+          ),
+          subtitle: Text(
+            '''
+${index + 1}. ${widget.quranInfo[index].translationIndonesia} | ${widget.quranInfo[index].ayahCount} ayat''',
+            style: const TextStyle(
+              fontSize: 12.0,
+              color: Colors.grey,
+              fontWeight: FontWeight.normal,
+            ),
+            maxLines: 2,
+          ),
+          trailing: SvgPicture.asset(
+            Assets.imagesSurah[index],
+            height: 32.0,
+            color: Theme.of(context).iconTheme.color,
           ),
         );
       },

@@ -58,7 +58,8 @@ class _BookmarksListViewWidgetState extends State<BookmarksListViewWidget> {
                     children: <Widget>[
                       SvgPicture.asset(
                         'assets/eva_icons/outline/svg/book-outline.svg',
-                        color: AppTheme.darkBlueGrey.withOpacity(0.5),
+                        color:
+                            Theme.of(context).iconTheme.color.withOpacity(0.7),
                         height: 16,
                       ),
                       Padding(
@@ -70,7 +71,7 @@ class _BookmarksListViewWidgetState extends State<BookmarksListViewWidget> {
                             fontWeight: FontWeight.w500,
                             fontSize: 14,
                             letterSpacing: 0.0,
-                            color: Theme.of(context).textTheme.caption.color,
+                            color: Theme.of(context).textTheme.headline1.color,
                           ),
                         ),
                       ),
@@ -95,9 +96,10 @@ class _BookmarksListViewWidgetState extends State<BookmarksListViewWidget> {
                     padding: const EdgeInsets.only(top: 10, bottom: 5),
                     child: Container(
                       height: 1,
-                      decoration: const BoxDecoration(
-                        color: AppTheme.lightBlueGrey,
-                        borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).dividerTheme.color,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(4.0)),
                       ),
                     ),
                   ),
@@ -107,7 +109,10 @@ class _BookmarksListViewWidgetState extends State<BookmarksListViewWidget> {
                       children: <Widget>[
                         SvgPicture.asset(
                           'assets/eva_icons/outline/svg/file-text-outline.svg',
-                          color: AppTheme.darkBlueGrey.withOpacity(0.5),
+                          color: Theme.of(context)
+                              .iconTheme
+                              .color
+                              .withOpacity(0.7),
                           height: 16,
                         ),
                         Flexible(

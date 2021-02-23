@@ -225,7 +225,10 @@ class _SalahWidgetState extends State<SalahWidget> {
                       children: <Widget>[
                         SvgPicture.asset(
                           'assets/eva_icons/outline/svg/calendar-outline.svg',
-                          color: Theme.of(context).iconTheme.color,
+                          color: Theme.of(context)
+                              .iconTheme
+                              .color
+                              .withOpacity(0.7),
                           height: 16,
                         ),
                         Padding(

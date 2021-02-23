@@ -23,15 +23,52 @@ class _BookmarksWidgetState extends State<BookmarksWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(left: 18, right: 16),
-          child: Text(
-            DongkapLocalizations.of(context).category,
-            textAlign: TextAlign.left,
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 20,
-              letterSpacing: 0.27,
-            ),
+          padding: const EdgeInsets.only(left: 16, right: 16),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  DongkapLocalizations.of(context).category,
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
+                    letterSpacing: 0.27,
+                  ),
+                ),
+              ),
+              InkWell(
+                highlightColor: Colors.transparent,
+                borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+                onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        DongkapLocalizations.of(context).others,
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 16,
+                          letterSpacing: 0.5,
+                          color: AppTheme.colorTheme,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 38,
+                        width: 26,
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: Theme.of(context).iconTheme.color,
+                          size: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
           ),
         ),
         const SizedBox(
@@ -88,7 +125,9 @@ class _BookmarksWidgetState extends State<BookmarksWidget> {
     return Container(
       margin: const EdgeInsets.only(right: 5.0),
       decoration: BoxDecoration(
-          color: isSelected ? AppTheme.colorTheme : AppTheme.lightColor,
+          color: isSelected
+              ? AppTheme.colorTheme
+              : Theme.of(context).buttonTheme.colorScheme,
           borderRadius: const BorderRadius.all(Radius.circular(24.0)),
           border: Border.all(color: AppTheme.colorTheme)),
       child: Material(
@@ -108,7 +147,9 @@ class _BookmarksWidgetState extends State<BookmarksWidget> {
                   fontWeight: FontWeight.w600,
                   fontSize: 12,
                   letterSpacing: 0.27,
-                  color: isSelected ? AppTheme.lightColor : AppTheme.colorTheme,
+                  color: isSelected
+                      ? Theme.of(context).colorScheme.onPrimary
+                      : AppTheme.colorTheme,
                 ),
               ),
             ),

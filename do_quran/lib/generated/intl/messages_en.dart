@@ -106,6 +106,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "logout" : MessageLookupByLibrary.simpleMessage("Logout"),
     "male" : MessageLookupByLibrary.simpleMessage("Male"),
     "newPassword" : MessageLookupByLibrary.simpleMessage("New Password"),
+    "others" : MessageLookupByLibrary.simpleMessage("Others"),
     "password" : MessageLookupByLibrary.simpleMessage("Password"),
     "pdob" : MessageLookupByLibrary.simpleMessage("Place / Date of Birth"),
     "phoneNumber" : MessageLookupByLibrary.simpleMessage("Phone Number"),

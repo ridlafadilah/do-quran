@@ -2,7 +2,6 @@ import 'package:do_core/core.dart';
 import 'package:do_core/models.dart';
 import 'package:do_quran/helper/remove_glow.dart';
 import 'package:do_quran/qibla/qibla_page.dart';
-import 'package:do_theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
@@ -180,7 +179,7 @@ class _SalahSkeletonWidgetState extends State<SalahSkeletonWidget> {
                   children: <Widget>[
                     SvgPicture.asset(
                       'assets/eva_icons/outline/svg/calendar-outline.svg',
-                      color: Theme.of(context).iconTheme.color,
+                      color: Theme.of(context).iconTheme.color.withOpacity(0.5),
                       height: 16,
                     ),
                     Padding(

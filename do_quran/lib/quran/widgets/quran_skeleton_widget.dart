@@ -18,45 +18,48 @@ class _QuranSkeletonWidgetState extends State<QuranSkeletonWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-      baseColor: Theme.of(context).colorScheme.primaryVariant,
-      highlightColor: Theme.of(context).colorScheme.secondaryVariant,
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: itemCount,
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            margin: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 32.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: widthTitle,
-                      height: heightTitle,
-                      color: Colors.white,
-                      margin: marginTitle,
-                    ),
-                    Container(
-                      width: widthSubtitle,
-                      height: 14,
-                      color: Colors.white,
-                    ),
-                  ],
-                ),
-                Container(
-                  width: widthLeading,
-                  height: heightLeading,
-                  decoration: const BoxDecoration(color: Colors.white),
-                ),
-              ],
-            ),
-          );
-        },
+    return Padding(
+      padding: const EdgeInsets.only(top: 12),
+      child: Shimmer.fromColors(
+        baseColor: Theme.of(context).colorScheme.primaryVariant,
+        highlightColor: Theme.of(context).colorScheme.secondaryVariant,
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: itemCount,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              margin: const EdgeInsets.fromLTRB(16.0, 3.0, 16.0, 21.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: widthTitle,
+                        height: heightTitle,
+                        color: Colors.white,
+                        margin: marginTitle,
+                      ),
+                      Container(
+                        width: widthSubtitle,
+                        height: 14,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                  Container(
+                    width: widthLeading,
+                    height: heightLeading,
+                    decoration: const BoxDecoration(color: Colors.white),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

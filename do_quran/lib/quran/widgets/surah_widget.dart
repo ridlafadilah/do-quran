@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:do_core/core.dart';
 import 'package:do_core/models.dart';
 import 'package:do_quran/quran/models/marker_ayah_model.dart';
-import 'package:do_theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -16,7 +15,7 @@ class SurahWidget extends StatefulWidget {
       this.animationController,
       @required this.surah,
       this.ayat = 1,
-      this.clearAll,
+      this.marks,
       this.onTapAyah})
       : super(key: key);
 
@@ -25,8 +24,8 @@ class SurahWidget extends StatefulWidget {
   final AnimationController animationController;
   final Surah surah;
   final int ayat;
-  final bool clearAll;
-  final void Function(List<MarkerAyah> marks) onTapAyah;
+  final List<MarkerAyah> marks;
+  final void Function(MarkerAyah mark) onTapAyah;
 
   @override
   _SurahWidgetState createState() => _SurahWidgetState();
@@ -35,17 +34,10 @@ class SurahWidget extends StatefulWidget {
 class _SurahWidgetState extends State<SurahWidget> {
   final String openingAyah = 'بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ';
   final bool isOpeningAyah = true;
-  List<MarkerAyah> marks = [];
-  MarkerAyah mark = MarkerAyah();
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.clearAll) {
-        setState(() {
-          marks = [];
-        });
-      }
       if (widget.itemScrollController.isAttached) {
         if (widget.ayat > 5) {
           widget.itemScrollController.scrollTo(
@@ -107,102 +99,80 @@ class _SurahWidgetState extends State<SurahWidget> {
   }
 
   Widget surahWidget({String key}) {
-    return InkWell(
+    return ListTile(
       onTap: () {
         final int surahNumber = int.parse(widget.surah.number);
         final int ayahNumber = int.parse(key);
-        mark = marks.firstWhere(
-            (element) =>
-                element.surah == surahNumber && element.ayah == ayahNumber,
-            orElse: () => null);
-        if (mark == null) {
-          mark = MarkerAyah(surah: surahNumber, ayah: ayahNumber);
-          marks.add(mark);
-        } else {
-          marks.removeWhere((element) =>
-              element.surah == surahNumber && element.ayah == ayahNumber);
-        }
-        widget.onTapAyah(marks);
+        widget.onTapAyah(MarkerAyah(surah: surahNumber, ayah: ayahNumber));
       },
-      child: Container(
-        padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-        color: (marks.any((element) => element.ayah == int.parse(key)))
-            ? Theme.of(context).hintColor
-            : Colors.transparent,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+      selected: (widget.marks.any((element) => element.ayah == int.parse(key))),
+      selectedTileColor: Theme.of(context).hintColor.withOpacity(0.8),
+      tileColor: Colors.transparent,
+      title: RichText(
+        softWrap: true,
+        textDirection: TextDirection.rtl,
+        textAlign: TextAlign.right,
+        text: TextSpan(
           children: [
-            RichText(
-              softWrap: true,
-              textDirection: TextDirection.rtl,
-              textAlign: TextAlign.right,
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: '${widget.surah.text[key]}',
-                    style: TextStyle(
-                      fontFamily: 'IsepMisbah',
-                      fontSize: 20.0,
-                      color: Theme.of(context).textTheme.headline1.color,
-                      fontWeight: FontWeight.normal,
-                      wordSpacing: 2.5,
-                      letterSpacing: 1.0,
-                      height: 2.2,
-                    ),
-                  ),
-                  WidgetSpan(
-                    alignment: PlaceholderAlignment.middle,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
-                      child: Stack(
-                        children: <Widget>[
-                          Container(
-                            child: SvgPicture.asset(
-                              'assets/icons/separator.svg',
-                              color:
-                                  Theme.of(context).appBarTheme.iconTheme.color,
-                              height: 40,
-                            ),
-                          ),
-                          Container(
-                            width: 30,
-                            padding:
-                                const EdgeInsets.fromLTRB(0.0, 9.0, 0.0, 9.0),
-                            child: Text(
-                              StringUtils.toFarsi(key),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'IsepMisbah',
-                                fontSize: 16.0,
-                                color:
-                                    Theme.of(context).textTheme.headline1.color,
-                                fontWeight: FontWeight.normal,
-                                wordSpacing: 2.0,
-                                height: 1.5,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+            TextSpan(
+              text: '${widget.surah.text[key]}',
+              style: TextStyle(
+                fontFamily: 'IsepMisbah',
+                fontSize: 20.0,
+                color: Theme.of(context).textTheme.headline1.color,
+                fontWeight: FontWeight.normal,
+                wordSpacing: 2.5,
+                letterSpacing: 1.0,
+                height: 2.2,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 5.0),
-              child: Text(
-                '${widget.surah.translations.id.text[key]} ($key)',
-                style: TextStyle(
-                  fontSize: 15.0,
-                  color: Theme.of(context).textTheme.bodyText1.color,
-                  fontWeight: FontWeight.normal,
-                  wordSpacing: 2.0,
-                  height: 1.5,
+            WidgetSpan(
+              alignment: PlaceholderAlignment.middle,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      child: SvgPicture.asset(
+                        'assets/icons/separator.svg',
+                        color: Theme.of(context).appBarTheme.iconTheme.color,
+                        height: 40,
+                      ),
+                    ),
+                    Container(
+                      width: 30,
+                      padding: const EdgeInsets.fromLTRB(0.0, 9.0, 0.0, 9.0),
+                      child: Text(
+                        StringUtils.toFarsi(key),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'IsepMisbah',
+                          fontSize: 16.0,
+                          color: Theme.of(context).textTheme.headline1.color,
+                          fontWeight: FontWeight.normal,
+                          wordSpacing: 2.0,
+                          height: 1.5,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
           ],
+        ),
+      ),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(top: 5.0),
+        child: Text(
+          '${widget.surah.translations.id.text[key]} ($key)',
+          style: TextStyle(
+            fontSize: 15.0,
+            color: Theme.of(context).textTheme.bodyText1.color,
+            fontWeight: FontWeight.normal,
+            wordSpacing: 2.0,
+            height: 1.5,
+          ),
         ),
       ),
     );

@@ -2,9 +2,9 @@ import 'package:do_common/common.dart';
 import 'package:do_core/models.dart';
 import 'package:do_quran/generated/l10n.dart';
 import 'package:do_quran/quran/bloc/surah_bloc.dart';
+import 'package:do_quran/quran/models/marker_ayah_model.dart';
 import 'package:do_quran/quran/widgets/surah_skeleton_widget.dart';
 import 'package:do_quran/quran/widgets/surah_widget.dart';
-import 'package:do_quran/theme/bloc/thememode_bloc.dart';
 import 'package:do_theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,7 +34,7 @@ class _SurahPageState extends State<SurahPage> with TickerProviderStateMixin {
   int totalAyah = 0;
   bool isPinnedAyah = false;
   bool isLastAyah = false;
-  bool clearAll = false;
+  List<MarkerAyah> marks = [];
 
   @override
   void initState() {
@@ -117,8 +117,22 @@ class _SurahPageState extends State<SurahPage> with TickerProviderStateMixin {
               animationController: widget.animationController,
               surah: state.surah,
               ayat: posAyah,
-              clearAll: clearAll,
-              onTapAyah: (marks) {
+              marks: marks,
+              onTapAyah: (value) {
+                final int surahNumber = value.surah;
+                final int ayahNumber = value.ayah;
+                final MarkerAyah mark = marks.firstWhere(
+                    (element) =>
+                        element.surah == surahNumber &&
+                        element.ayah == ayahNumber,
+                    orElse: () => null);
+                if (mark == null) {
+                  marks.add(MarkerAyah(surah: surahNumber, ayah: ayahNumber));
+                } else {
+                  marks.removeWhere((element) =>
+                      element.surah == surahNumber &&
+                      element.ayah == ayahNumber);
+                }
                 if (marks.isNotEmpty) {
                   if (marks.length == 1) {
                     setState(() {
@@ -265,7 +279,7 @@ class _SurahPageState extends State<SurahPage> with TickerProviderStateMixin {
                     setState(() {
                       isPinnedAyah = false;
                       isLastAyah = false;
-                      clearAll = true;
+                      marks = [];
                     });
                   },
                   child: Center(
