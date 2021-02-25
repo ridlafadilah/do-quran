@@ -6,7 +6,6 @@ import 'package:do_quran/generated/l10n.dart';
 import 'package:do_theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class BookmarksPage extends StatefulWidget {
   const BookmarksPage({Key key, this.animationController}) : super(key: key);
@@ -49,11 +48,22 @@ class _BookmarksPageState extends State<BookmarksPage>
   Widget mainView() {
     return BlocProvider(
       create: (context) {
-        return BookmarksBloc()..add(const RequestedMonthEvent());
+        return BookmarksBloc()..add(const RequestedEvent());
       },
       child: BlocBuilder<BookmarksBloc, BookmarksState>(
         builder: (BuildContext context, BookmarksState state) {
-          return BookmarksWidget();
+          if (state is RequestSuccessState) {
+            return BookmarksWidget(verses: state.verses);
+          } else if (state is RequestFailureState) {
+            return ConnectionErrorWidget(
+                error: DongkapLocalizations.of(context).ERR_LOAD_FILE,
+                retryButton: DongkapLocalizations.of(context).retry,
+                onPressed: () async {
+                  context.read<BookmarksBloc>().add(const RequestedEvent());
+                });
+          } else {
+            return BookmarksSkeletonWidget();
+          }
         },
       ),
     );

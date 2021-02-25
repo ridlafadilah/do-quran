@@ -1,10 +1,15 @@
+import 'package:do_core/models.dart';
+import 'package:do_quran/bookmarks/bloc/bookmarks_bloc.dart';
 import 'package:do_quran/bookmarks/widgets/bookmarks_list_view_widget.dart';
 import 'package:do_quran/generated/l10n.dart';
 import 'package:do_theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BookmarksWidget extends StatefulWidget {
-  BookmarksWidget({Key key}) : super(key: key);
+  BookmarksWidget({Key key, this.verses}) : super(key: key);
+
+  final List<VersesBookmarks> verses;
 
   @override
   _BookmarksWidgetState createState() => _BookmarksWidgetState();
@@ -95,8 +100,10 @@ class _BookmarksWidgetState extends State<BookmarksWidget> {
             backgroundColor: Theme.of(context).dialogTheme.backgroundColor,
             color: AppTheme.colorTheme,
             strokeWidth: 3,
-            child: BookmarksListViewWidget(),
-            onRefresh: () async {},
+            child: BookmarksListViewWidget(verses: widget.verses),
+            onRefresh: () async {
+              context.read<BookmarksBloc>().add(const RequestedEvent());
+            },
           ),
         ),
       ],

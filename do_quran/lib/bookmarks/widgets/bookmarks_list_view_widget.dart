@@ -1,8 +1,11 @@
+import 'package:do_core/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class BookmarksListViewWidget extends StatefulWidget {
-  BookmarksListViewWidget({Key key}) : super(key: key);
+  BookmarksListViewWidget({Key key, this.verses}) : super(key: key);
+
+  final List<VersesBookmarks> verses;
 
   @override
   _BookmarksListViewWidgetState createState() =>
@@ -22,14 +25,14 @@ class _BookmarksListViewWidgetState extends State<BookmarksListViewWidget> {
         padding: EdgeInsets.only(
           bottom: 15 + MediaQuery.of(context).padding.bottom,
         ),
-        itemCount: 6,
+        itemCount: widget.verses.length,
         scrollDirection: Axis.vertical,
         itemBuilder: (BuildContext context, int index) {
-          return getListBookmarks('Al-Baqarah', index + 1);
+          return getListBookmarks(widget.verses[index]);
         });
   }
 
-  Widget getListBookmarks(String surah, int ayah) {
+  Widget getListBookmarks(VersesBookmarks verse) {
     return Padding(
       padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
       child: Container(
@@ -63,7 +66,7 @@ class _BookmarksListViewWidgetState extends State<BookmarksListViewWidget> {
                       Padding(
                         padding: const EdgeInsets.only(left: 4.0),
                         child: Text(
-                          '$surah : $ayah',
+                          '${verse.surahName} : ${verse.ayah}',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -78,7 +81,7 @@ class _BookmarksListViewWidgetState extends State<BookmarksListViewWidget> {
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0, left: 20.0),
                     child: Text(
-                      'Dengan nama Allah Yang Maha Pengasih, Maha Penyayang.',
+                      verse.ayahTranslation,
                       softWrap: false,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -118,8 +121,7 @@ class _BookmarksListViewWidgetState extends State<BookmarksListViewWidget> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 4.0),
                             child: Text(
-                              '''
-Dengan nama Allah Yang Maha Pengasih, Maha Penyayang.''',
+                              verse.notes,
                               softWrap: false,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,

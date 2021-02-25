@@ -31,15 +31,17 @@ class DatabaseProvider {
   }
 
   void onCreate(Database database, int version) async {
-    await database.execute(DBHelper.quranInfoTable);
-    await database.execute(DBHelper.surahTable);
-    await database.execute(DBHelper.ayahTable);
-    await database.execute(DBHelper.ayahTranslationTable);
-    await database.execute(DBHelper.categoryBookmarksTable);
-    await database.execute(DBHelper.ayahBookmarksTable);
+    Batch batch = database.batch();
+    batch.execute(DBHelper.quranInfoTable);
+    batch.execute(DBHelper.surahTable);
+    batch.execute(DBHelper.ayahTable);
+    batch.execute(DBHelper.ayahTranslationTable);
+    batch.execute(DBHelper.categoryBookmarksTable);
+    batch.execute(DBHelper.versesBookmarksTable);
+    await batch.commit();
   }
 
-  static Future onConfigure(Database db) async {
+  Future onConfigure(Database db) async {
     await db.execute('PRAGMA foreign_keys = ON');
   }
 }

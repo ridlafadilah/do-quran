@@ -1,24 +1,42 @@
-import 'dart:convert';
-
+import 'package:dio/dio.dart';
+import 'package:do_core/api/bookmarks/bookmarks_api.dart';
+import 'package:do_core/core.dart';
+import 'package:do_core/models.dart';
 import 'package:do_core/models/quran/category_bookmarks.dart';
-import 'package:global_configuration/global_configuration.dart';
-import 'package:http/http.dart' as http;
+import 'package:do_core/models/quran/entity/category_bookmarks_entity.dart';
+import 'package:do_core/models/quran/entity/verses_bookmarks_entity.dart';
+import 'package:do_core/repository/verses_bookmarks_dao.dart';
 
 class BookmarksService {
-  BookmarksService() {
-    baseUrl = GlobalConfiguration().getValue('hosts')['bookmarks']['host'];
-  }
-  String baseUrl;
+  final BookmarksAPI _bookmarksAPI = BookmarksAPI(Dio());
+  final BookmarksDao _bookmarksDao = BookmarksDao();
+  final VersesBookmarksDao _versesDao = VersesBookmarksDao();
+  List<CategoryBookmarks> categoryBookmarks = [];
 
-  Future<Map<String, String>> getVersion() async {
-    var response = await http.get('$baseUrl/bookmarks/version.json');
-    Map<String, String> data = json.decode(response.body);
-    return data;
-  }
-
-  Future<List<CategoryBookmarks>> downloadBookmarks() async {
-    var response = await http.get('$baseUrl/bookmarks/bookmarks.json');
-    Iterable data = json.decode(response.body);
-    return data.map((model) => CategoryBookmarks.fromJson(model)).toList();
+  Future<List<VersesBookmarks>> getBookmarks() async {
+    Map<String, dynamic> version =
+        await _bookmarksAPI.getVersion() as Map<String, dynamic>;
+    String currentVersion = await _bookmarksDao.getByVersion();
+    if (currentVersion != version['version']) {
+      categoryBookmarks = await _bookmarksAPI.downloadBookmarks();
+      await _bookmarksDao.deleteCategoryByVersion(currentVersion);
+      for (CategoryBookmarks value in categoryBookmarks) {
+        final List<VersesBookmarksEntity> verses = value.verses
+            ?.map((e) =>
+                e == null ? null : VersesBookmarksEntity.fromJson(e.toJson()))
+            ?.toList();
+        final CategoryBookmarksEntity categoryBookmarksEntity =
+            CategoryBookmarksEntity.fromJson(value.toJson());
+        categoryBookmarksEntity.version = version['version'];
+        int idCategory = await _bookmarksDao.save(categoryBookmarksEntity);
+        await _versesDao.saveVersesByCategory(verses, idCategory);
+      }
+    }
+    List<VersesBookmarksEntity> versesBookmarksEntity =
+        await _versesDao.getAll();
+    List<VersesBookmarks> versesBookmarks = versesBookmarksEntity
+        ?.map((e) => e == null ? null : VersesBookmarks.fromJson(e.toJson()))
+        ?.toList();
+    return versesBookmarks;
   }
 }

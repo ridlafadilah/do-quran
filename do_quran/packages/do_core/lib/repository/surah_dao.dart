@@ -49,6 +49,40 @@ class SurahDao extends BaseDao<SurahEntity> {
     return surah;
   }
 
+  Future<SurahEntity> getSurahByAyah(
+      int numberOfSurah, int numberOfAyah) async {
+    final db = await dbProvider.database;
+    List<Map<String, dynamic>> result = [];
+    result = await db.query(
+      tableName,
+      where: 'number = ?',
+      whereArgs: [numberOfSurah],
+    );
+    List<SurahEntity> surahList = result.isNotEmpty
+        ? result.map((item) => SurahEntity.fromJson(item)).toList()
+        : [];
+    result = await db.query(
+      'ayah',
+      where: 'id_surah = ? AND number_of_ayah = ?',
+      whereArgs: [numberOfSurah, numberOfAyah],
+    );
+    List<AyahEntity> ayahList = result.isNotEmpty
+        ? result.map((item) => AyahEntity.fromJson(item)).toList()
+        : [];
+    result = await db.query(
+      'ayah_translation',
+      where: 'id_surah = ? AND number_of_ayah = ?',
+      whereArgs: [numberOfSurah, numberOfAyah],
+    );
+    List<AyahTranslationEntity> translations = result.isNotEmpty
+        ? result.map((item) => AyahTranslationEntity.fromJson(item)).toList()
+        : [];
+    SurahEntity surah = surahList.first;
+    surah.ayah = ayahList;
+    surah.translations = translations;
+    return surah;
+  }
+
   Future<List<SurahEntity>> getSurahQuery(
       {List<String> columns, String query}) async {
     List<Map<String, dynamic>> result =
@@ -65,14 +99,14 @@ class SurahDao extends BaseDao<SurahEntity> {
     await db.insert(tableName, baseEntity.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace);
     Batch batch = db.batch();
-    baseEntity.ayah.forEach((value) {
+    for (AyahEntity value in baseEntity.ayah) {
       // await db.insert('ayah', value.toJson());
       batch.insert('ayah', value.toJson());
-    });
-    baseEntity.translations.forEach((value) {
+    }
+    for (AyahTranslationEntity value in baseEntity.translations) {
       // await db.insert('ayah_translation', value.toJson());
       batch.insert('ayah_translation', value.toJson());
-    });
+    }
     await batch.commit(noResult: true);
   }
 

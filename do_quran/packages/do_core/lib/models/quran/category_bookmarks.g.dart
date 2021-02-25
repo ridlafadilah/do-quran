@@ -12,11 +12,12 @@ CategoryBookmarks _$CategoryBookmarksFromJson(Map<String, dynamic> json) {
     description: json['description'] as String,
     type: json['type'] as String,
     version: json['version'] as String,
-  )..ayah = (json['ayah'] as List)
-      ?.map((e) => e == null
-          ? null
-          : AyahBookmarksEntity.fromJson(e as Map<String, dynamic>))
-      ?.toList();
+    verses: (json['verses'] as List)
+        ?.map((e) => e == null
+            ? null
+            : VersesBookmarks.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+  );
 }
 
 Map<String, dynamic> _$CategoryBookmarksToJson(CategoryBookmarks instance) =>
@@ -25,5 +26,5 @@ Map<String, dynamic> _$CategoryBookmarksToJson(CategoryBookmarks instance) =>
       'description': instance.description,
       'type': instance.type,
       'version': instance.version,
-      'ayah': instance.ayah,
+      'verses': instance.verses,
     };

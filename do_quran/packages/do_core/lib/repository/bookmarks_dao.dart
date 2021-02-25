@@ -1,98 +1,36 @@
-import 'package:do_core/models/quran/entity/ayah_entity.dart';
-import 'package:do_core/models/quran/entity/ayah_translation_entity.dart';
-import 'package:do_core/models/quran/entity/surah_entity.dart';
+import 'package:do_core/models/quran/entity/category_bookmarks_entity.dart';
 import 'package:do_core/repository/base_dao.dart';
 import 'package:sqflite/sqflite.dart';
 
-class BookmarksDao extends BaseDao<SurahEntity> {
-  BookmarksDao() : super(tableName: 'category_bookmark');
+class BookmarksDao extends BaseDao<CategoryBookmarksEntity> {
+  BookmarksDao() : super(tableName: 'category_bookmarks');
 
-  Future<int> countSurah(int numberOfSurah) async {
+  Future<int> countByVersion(String version) async {
     final db = await dbProvider.database;
     int count = Sqflite.firstIntValue(
-        await db.rawQuery('SELECT COUNT(surah.number) FROM surah '
-            'LEFT JOIN ayah ON ayah.id_surah = surah.number '
-            'WHERE surah.number = $numberOfSurah'));
+        await db.rawQuery('SELECT COUNT(*) FROM category_bookmarks '
+            'WHERE version = "$version"'));
     return count;
   }
 
-  Future<SurahEntity> getSurah(int numberOfSurah) async {
+  Future<String> getByVersion() async {
     final db = await dbProvider.database;
-    List<Map<String, dynamic>> result = [];
-    result = await db.query(
-      tableName,
-      where: 'number = ?',
-      whereArgs: [numberOfSurah],
-    );
-    List<SurahEntity> surahList = result.isNotEmpty
-        ? result.map((item) => SurahEntity.fromJson(item)).toList()
-        : [];
-    result = await db.query(
-      'ayah',
-      where: 'id_surah = ?',
-      whereArgs: [numberOfSurah],
-    );
-    List<AyahEntity> ayahList = result.isNotEmpty
-        ? result.map((item) => AyahEntity.fromJson(item)).toList()
-        : [];
-    result = await db.query(
-      'ayah_translation',
-      where: 'id_surah = ?',
-      whereArgs: [numberOfSurah],
-    );
-    List<AyahTranslationEntity> translations = result.isNotEmpty
-        ? result.map((item) => AyahTranslationEntity.fromJson(item)).toList()
-        : [];
-    SurahEntity surah = surahList.first;
-    surah.ayah = ayahList;
-    surah.translations = translations;
-    return surah;
-  }
-
-  Future<List<SurahEntity>> getSurahQuery(
-      {List<String> columns, String query}) async {
     List<Map<String, dynamic>> result =
-        await getQuery(columns: columns, query: query);
-    List<SurahEntity> surah = result.isNotEmpty
-        ? result.map((item) => SurahEntity.fromJson(item)).toList()
-        : [];
-    return surah;
+        await db.rawQuery('SELECT version FROM category_bookmarks LIMIT 1');
+    String version = result.isEmpty ? '' : result[0]['version'];
+    return version;
   }
 
   @override
-  Future save(SurahEntity baseEntity) async {
+  Future<int> save(CategoryBookmarksEntity baseEntity) async {
     final db = await dbProvider.database;
-    await db.insert(tableName, baseEntity.toJson(),
+    return await db.insert(tableName, baseEntity.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace);
-    baseEntity.ayah.forEach((value) async {
-      await db.insert('ayah', value.toJson());
-    });
-    baseEntity.translations.forEach((value) async {
-      await db.insert('ayah_translation', value.toJson());
-    });
   }
 
-  Future<int> update(SurahEntity surah) async {
+  Future<int> deleteCategoryByVersion(String version) async {
     final db = await dbProvider.database;
-    var result = await db.update(tableName, surah.toJson(),
-        where: 'number = ?', whereArgs: [surah.number]);
-    return result;
-  }
-
-  Future<int> delete(int id) async {
-    final db = await dbProvider.database;
-    var result =
-        await db.delete(tableName, where: 'number = ?', whereArgs: [id]);
-    return result;
-  }
-
-  Future deleteSurah(int numberOfSurah) async {
-    final db = await dbProvider.database;
-    /*
-    await db.delete('ayah', where: 'id_surah = ?', whereArgs: [numberOfSurah]);
-    await db.delete('ayah_translation',
-        where: 'id_surah = ?', whereArgs: [numberOfSurah]);
-    */
-    await db.delete(tableName, where: 'number = ?', whereArgs: [numberOfSurah]);
+    return await db
+        .delete(tableName, where: 'version = ?', whereArgs: [version]);
   }
 }

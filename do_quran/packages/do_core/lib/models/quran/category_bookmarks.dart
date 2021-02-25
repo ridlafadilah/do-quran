@@ -1,17 +1,13 @@
-import 'package:do_core/models/quran/entity/ayah_bookmarks_entity.dart';
 import 'package:do_core/models/quran/entity/base_entity.dart';
+import 'package:do_core/models/quran/verses_bookmarks.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'category_bookmarks.g.dart';
 
 @JsonSerializable()
 class CategoryBookmarks extends BaseEntity {
-  CategoryBookmarks({
-    this.title,
-    this.description,
-    this.type,
-    this.version,
-  });
+  CategoryBookmarks(
+      {this.title, this.description, this.type, this.version, this.verses});
 
   factory CategoryBookmarks.fromJson(Map<String, dynamic> json) =>
       _$CategoryBookmarksFromJson(json);
@@ -23,7 +19,7 @@ class CategoryBookmarks extends BaseEntity {
   String description;
   String type;
   String version;
-  List<AyahBookmarksEntity> ayah;
+  List<VersesBookmarks> verses = [];
 
   @override
   String toString() {
